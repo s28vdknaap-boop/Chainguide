@@ -1,5 +1,37 @@
 const https = require('https');
 
+const SUPABASE_URL = 'https://brswfmqvremziuqxrxei.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY;
+
+function supabaseInsert(data) {
+  return new Promise((resolve, reject) => {
+    const postData = JSON.stringify(data);
+    const url = new URL('/rest/v1/gebruikers', SUPABASE_URL);
+    
+    const options = {
+      hostname: url.hostname,
+      path: url.pathname,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'return=minimal',
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let body = '';
+      res.on('data', chunk => body += chunk);
+      res.on('end', () => resolve(body));
+    });
+    req.on('error', reject);
+    req.write(postData);
+    req.end();
+  });
+}
+
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -7,12 +39,28 @@ exports.handler = async function(event) {
 
   const { naam, rijder, fiets, merkOlie, typeOlie, merkReiniger, frequentie, omstandigheden } = JSON.parse(event.body);
 
+  // Sla data op in Supabase
+  try {
+    await supabaseInsert({
+      naam,
+      rijder_type: rijder,
+      fiets_type: fiets,
+      merk_olie: merkOlie,
+      product_olie: typeOlie,
+      merk_reiniger: merkReiniger,
+      frequentie,
+      omstandigheden
+    });
+  } catch(e) {
+    console.error('Supabase error:', e.message);
+  }
+
   const prompt = `Je bent een expert fietsonderhoud adviseur bij het platform ChainGuide. Geef een concreet, stap-voor-stap onderhoudsplan voor:
 
 - Naam: ${naam}
 - Rijdersprofiel: ${rijder}
 - Fietstype: ${fiets}
-- Smeermiddel: ${merkOlie} — type: ${typeOlie}
+- Smeermiddel: ${merkOlie} — product: ${typeOlie}
 - Reiniger: ${merkReiniger}
 - Rijfrequentie: ${frequentie}
 - Rijomstandigheden: ${omstandigheden}
@@ -50,37 +98,19 @@ Geef ALLEEN de JSON array terug, geen uitleg, geen markdown backticks.`;
         try {
           const parsed = JSON.parse(data);
           if (parsed.error) {
-            resolve({
-              statusCode: 500,
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ debug: parsed.error })
-            });
+            resolve({ statusCode: 500, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ debug: parsed.error }) });
             return;
           }
           const text = parsed.content.map(i => i.text || '').join('');
-          resolve({
-            statusCode: 200,
-            headers: { "Content-Type": "application/json" },
-            body: text
-          });
+          resolve({ statusCode: 200, headers: { "Content-Type": "application/json" }, body: text });
         } catch(e) {
-          resolve({ 
-            statusCode: 500, 
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ debug: 'Parse error: ' + e.message, raw: data.substring(0, 200) })
-          });
+          resolve({ statusCode: 500, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ debug: 'Parse error: ' + e.message }) });
         }
       });
     });
-
     req.on('error', (e) => {
-      resolve({ 
-        statusCode: 500, 
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ debug: 'Request error: ' + e.message })
-      });
+      resolve({ statusCode: 500, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ debug: 'Request error: ' + e.message }) });
     });
-
     req.write(postData);
     req.end();
   });
