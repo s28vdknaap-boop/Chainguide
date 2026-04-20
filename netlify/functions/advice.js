@@ -25,7 +25,7 @@ Geef exact 4 stappen terug als JSON array. Elke stap heeft:
 Geef ALLEEN de JSON array terug, geen uitleg, geen markdown backticks.`;
 
   const postData = JSON.stringify({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-sonnet-4-5",
     max_tokens: 1000,
     messages: [{ role: "user", content: prompt }]
   });
