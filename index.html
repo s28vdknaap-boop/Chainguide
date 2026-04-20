@@ -102,13 +102,7 @@
   }
 
   #hero::after {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 45%;
-    height: 100%;
-    background: var(--grey-light);
-    z-index: 0;
+    display: none;
   }
 
   .hero-left {
@@ -672,6 +666,48 @@
     letter-spacing: 0.06em;
   }
 
+
+  /* PHOTOS */
+  .hero-photo {
+    position: absolute;
+    top: 0; right: 0;
+    width: 45%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(20%) contrast(1.05);
+  }
+
+  .journal-card.featured {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .journal-card.featured .card-photo {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+  }
+
+  .journal-card.featured .card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%) brightness(0.4);
+  }
+
+  .journal-card.featured > *:not(.card-photo) {
+    position: relative;
+    z-index: 1;
+  }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     #hero { grid-template-columns: 1fr; gap: 40px; }
@@ -700,6 +736,9 @@
 
 <!-- HERO -->
 <header id="hero">
+  <div class="hero-photo">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85&fit=crop" alt="Road cycling" loading="eager">
+  </div>
   <div class="hero-left">
     <div class="hero-eyebrow fade-in">Drivetrain care, engineered</div>
     <h1 class="fade-in">Your chain.<br><em>Perfectly</em><br>maintained.</h1>
@@ -771,6 +810,9 @@
 
   <div class="journal-grid">
     <a class="journal-card featured" href="/kennisbank.html" onclick="return true">
+      <div class="card-photo">
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80&fit=crop" alt="Cycling chain close up" loading="lazy">
+      </div>
       <span class="journal-card-tag">Essential reading</span>
       <h3>How to lube your chain correctly — and why most riders get it wrong</h3>
       <p>Too much, too little, wrong timing. The most common chain maintenance mistakes and how to fix them.</p>
