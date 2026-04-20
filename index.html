@@ -634,12 +634,13 @@
 
   async function generateAdvice() {
     const naam = document.getElementById('naam').value || 'renner';
+    const email = document.getElementById('email').value || '';
     const rijder = document.getElementById('rijder_type').value;
     const fiets = document.getElementById('fiets_type').value;
     const merkOlie = document.getElementById('merk_olie').value;
     const typeOlie = document.getElementById('type_olie').value;
     const merkReiniger = document.getElementById('merk_reiniger').value;
-    const reinigersProduct = document.getElementById('reiniger_product') ? document.getElementById('reiniger_product').value : '';
+    const reinigersProduct = (document.getElementById('reiniger_product') && document.getElementById('reiniger_product').style.display !== 'none') ? document.getElementById('reiniger_product').value : '';
     const frequentie = document.getElementById('frequentie').value;
     const omstandigheden = document.getElementById('omstandigheden').value;
 
@@ -680,7 +681,7 @@ Geef ALLEEN de JSON array terug, geen uitleg, geen markdown backticks.`;
       const response = await fetch("/.netlify/functions/advice", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ naam, rijder, fiets, merkOlie, typeOlie, merkReiniger, frequentie, omstandigheden })
+        body: JSON.stringify({ naam, email, rijder, fiets, merkOlie, typeOlie, merkReiniger, reinigersProduct, frequentie, omstandigheden })
       });
 
       const text = await response.text();
