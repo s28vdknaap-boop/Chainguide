@@ -1,3 +1,5 @@
+const https = require('https');
+
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -22,26 +24,48 @@ Geef exact 4 stappen terug als JSON array. Elke stap heeft:
 
 Geef ALLEEN de JSON array terug, geen uitleg, geen markdown backticks.`;
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01"
-    },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1000,
-      messages: [{ role: "user", content: prompt }]
-    })
+  const postData = JSON.stringify({
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 1000,
+    messages: [{ role: "user", content: prompt }]
   });
 
-  const data = await response.json();
-  const text = data.content.map(i => i.text || '').join('');
+  return new Promise((resolve) => {
+    const options = {
+      hostname: 'api.anthropic.com',
+      path: '/v1/messages',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    };
 
-  return {
-    statusCode: 200,
-    headers: { "Content-Type": "application/json" },
-    body: text
-  };
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        try {
+          const parsed = JSON.parse(data);
+          const text = parsed.content.map(i => i.text || '').join('');
+          resolve({
+            statusCode: 200,
+            headers: { "Content-Type": "application/json" },
+            body: text
+          });
+        } catch(e) {
+          resolve({ statusCode: 500, body: 'Parse error: ' + e.message });
+        }
+      });
+    });
+
+    req.on('error', (e) => {
+      resolve({ statusCode: 500, body: 'Request error: ' + e.message });
+    });
+
+    req.write(postData);
+    req.end();
+  });
 };
