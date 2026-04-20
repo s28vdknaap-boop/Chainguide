@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kennisbank — Fietsonderhoud tips & uitleg | ChainGuide</title>
+<meta name="description" content="Alles over fietsonderhoud: hoe smeer je je ketting, welk smeermiddel kies je, hoe vaak onderhoud je je fiets? ChainGuide geeft je alle antwoorden.">
+<meta name="keywords" content="ketting smeren, fietsonderhoud, kettingolie, kettingwax, fiets ketting reinigen, wet lube, dry lube, hot wax, racefiets onderhoud, MTB onderhoud">
+<link rel="canonical" href="https://chainguide.nl/kennisbank">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Open Graph voor social sharing -->
+<meta property="og:title" content="Fietsonderhoud kennisbank | ChainGuide">
+<meta property="og:description" content="Alles wat je moet weten over je ketting smeren, reinigen en onderhouden.">
+<meta property="og:url" content="https://chainguide.nl/kennisbank">
+<meta property="og:type" content="website">
+
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ec;
+    --accent: #e8ff00;
+    --grey: #1a1a1a;
+    --mid: #2e2e2e;
+    --text-muted: #888;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  nav {
+    padding: 28px 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e1e1e;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .nav-cta {
+    padding: 10px 24px;
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.15s;
+  }
+
+  .nav-cta:hover { transform: translateY(-2px); }
+
+  .hero {
+    padding: 80px 6vw 60px;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 7vw, 80px);
+    line-height: 0.95;
+    margin-bottom: 24px;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #aaa;
+    max-width: 600px;
+  }
+
+  /* ARTIKEL GRID */
+  .articles {
+    padding: 60px 6vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2px;
+    background: #111;
+  }
+
+  .article-card {
+    background: var(--black);
+    padding: 40px 36px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .article-card:hover { background: var(--grey); }
+
+  .article-tag {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .article-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  .article-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #999;
+  }
+
+  .article-card .read-more {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ARTIKEL CONTENT */
+  .article-content {
+    display: none;
+    padding: 80px 6vw;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .article-content.active { display: block; }
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 48px;
+    padding: 0;
+  }
+
+  .back-btn:hover { color: var(--white); }
+
+  .article-content h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 64px);
+    margin-bottom: 8px;
+  }
+
+  .article-meta {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+  }
+
+  .article-content h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--accent);
+    margin: 48px 0 16px;
+    letter-spacing: 1px;
+  }
+
+  .article-content p {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: #ccc;
+    margin-bottom: 20px;
+  }
+
+  .article-content ul {
+    margin: 0 0 20px 20px;
+    color: #ccc;
+  }
+
+  .article-content ul li {
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 8px;
+  }
+
+  .tip-box {
+    background: var(--grey);
+    border-left: 3px solid var(--accent);
+    padding: 24px 28px;
+    margin: 32px 0;
+  }
+
+  .tip-box p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .tip-label {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 32px 0;
+    font-size: 0.9rem;
+  }
+
+  th {
+    background: var(--grey);
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #1e1e1e;
+    color: #ccc;
+    line-height: 1.6;
+  }
+
+  .cta-block {
+    background: var(--grey);
+    border: 1px solid #333;
+    padding: 40px;
+    margin: 48px 0;
+    text-align: center;
+  }
+
+  .cta-block h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .cta-block p {
+    color: #999;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--accent);
+    color: var(--black);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.15s;
+  }
+
+  .cta-btn:hover { transform: translateY(-2px); }
+
+  footer {
+    padding: 40px 6vw;
+    border-top: 1px solid #1e1e1e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">CHAINGUIDE</a>
+  <a href="/" class="nav-cta">Gratis advies →</a>
+</nav>
+
+<!-- OVERZICHT -->
+<div id="overzicht">
+  <div class="hero">
+    <div class="hero-tag">Kennisbank</div>
+    <h1>ALLES OVER FIETS<span style="color:var(--accent)">ONDERHOUD</span></h1>
+    <p class="hero-sub">Van ketting smeren tot hot wax — hier vind je praktische uitleg voor de serieuze fietser.</p>
+  </div>
+
+  <div class="articles">
+
+    <a class="article-card" onclick="toonArtikel('ketting-smeren')" href="#">
+      <div class="article-tag">Basis</div>
+      <h2>Hoe smeer je je ketting correct?</h2>
+      <p>De meeste fietsers smeren verkeerd — te veel, op het verkeerde moment, met het verkeerde middel. Zo doe je het goed.</p>
+      <span class="read-more">Lees meer →</span>
+    </a>
+
+    <a class="article-card" onclick="toonArtikel('olie-vs-wax')" href="#">
+      <div class="article-tag">Smeermiddelen</div>
+      <h2>Olie of wax: wat is beter?</h2>
+      <p>Kettingolie of kettingwax? Dry lube of wet lube? Hot wax of drip wax? We leggen de verschillen uit zodat jij de juiste keuze maakt.</p>
+      <span class="read-more">Lees meer →</span>
+    </a>
+
+    <a class="article-card" onclick="toonArtikel('hoe-vaak')" href="#">
+      <div class="article-tag">Onderhoud</div>
+      <h2>Hoe vaak moet je je ketting onderhouden?</h2>
+      <p>Na 200km? Na elke rit? Na regen? De juiste frequentie hangt af van je rijstijl, je smeermiddel en de weersomstandigheden.</p>
+      <span class="read-more">Lees meer →</span>
+    </a>
+
+    <a class="article-card" onclick="toonArtikel('reinigen')" href="#">
+      <div class="article-tag">Reiniging</div>
+      <h2>Ketting reinigen: stap voor stap</h2>
+      <p>Een vuile ketting slijt 3x sneller. Zo maak je je ketting grondig schoon zonder dure apparatuur.</p>
+      <span class="read-more">Lees meer →</span>
+    </a>
+
+    <a class="article-card" onclick="toonArtikel('hot-wax')" href="#">
+      <div class="article-tag">Gevorderd</div>
+      <h2>Hot wax: de complete gids</h2>
+      <p>Hot wax is de goudstandaard voor serieuze amateurs. Meer watt, minder slijtage, schonere ketting. Maar hoe begin je?</p>
+      <span class="read-more">Lees meer →</span>
+    </a>
+
+    <a class="article-card" onclick="toonArtikel('slijtage')" href="#">
+      <div class="article-tag">Inspectie</div>
+      <h2>Wanneer is je ketting versleten?</h2>
+      <p>Een versleten ketting beschadigt je cassette en tandwielen. Zo check je of het tijd is voor een nieuwe ketting.</p>
+      <span class="read-more">Lees meer →</span>
+    </a>
+
+  </div>
+</div>
+
+<!-- ARTIKEL: KETTING SMEREN -->
+<div class="article-content" id="art-ketting-smeren">
+  <button class="back-btn" onclick="toonOverzicht()">← Terug naar kennisbank</button>
+  <div class="article-tag">Basis</div>
+  <h1>HOE SMEER JE JE KETTING CORRECT?</h1>
+  <div class="article-meta">Leestijd: 4 minuten · ChainGuide kennisbank</div>
+
+  <p>De ketting is het hardst werkende onderdeel van je fiets. Hij zet elke trapbeweging om in voorwaartse beweging — onder enorme druk, honderden keren per minuut. Toch behandelen de meeste fietsers hun ketting slordig: te veel smeren, op het verkeerde moment, met het verkeerde middel.</p>
+
+  <h2>De basisregel</h2>
+  <p>Smeer altijd van binnenuit. Het smeermiddel hoort in de rollen en pinnetjes van de ketting te zitten — niet op de buitenkant. Olie op de buitenplaten doet niks, maar trekt wel vuil aan. Minder is meer.</p>
+
+  <div class="tip-box">
+    <span class="tip-label">💡 Pro tip</span>
+    <p>Breng smeermiddel aan terwijl je de pedalen langzaam achteruit draait. Zo bereik je elke schakel. Veeg daarna de buitenkant droog met een schone doek.</p>
+  </div>
+
+  <h2>Stap voor stap</h2>
+  <p>Volg deze volgorde voor een optimaal resultaat:</p>
+  <ul>
+    <li><strong>Stap 1 — Reinig eerst</strong> — Smeer nooit op een vuile ketting. Vuil vermengd met olie wordt een schuurpasta die je aandrijflijn vernietigt. Gebruik een ontvetter of kettingreiniger.</li>
+    <li><strong>Stap 2 — Droog volledig</strong> — Laat de ketting volledig drogen na het reinigen. Olie op een natte ketting hecht slecht.</li>
+    <li><strong>Stap 3 — Breng smeermiddel aan</strong> — Druppel het smeermiddel op de binnenkant van de ketting, schakel voor schakel, terwijl je achteruit trapt.</li>
+    <li><strong>Stap 4 — Laat intrekken</strong> — Wacht minimaal 10-15 minuten. Bij wax lube: minimaal een uur, bij voorkeur de avond voor je rit.</li>
+    <li><strong>Stap 5 — Veeg overtollig weg</strong> — Gebruik een droge doek om de buitenkant van de ketting af te vegen. Wat er afkomt was toch al niet nodig.</li>
+  </ul>
+
+  <h2>Veelgemaakte fouten</h2>
+  <table>
+    <tr><th>Fout</th><th>Gevolg</th></tr>
+    <tr><td>Te veel smeren</td><td>Vuil blijft kleven, zwarte pasta, snelle slijtage</td></tr>
+    <tr><td>Smeren zonder te reinigen</td><td>Vuil en olie worden schuurpasta</td></tr>
+    <tr><td>Verkeerd smeermiddel</td><td>Olie spoelt weg bij regen of trekt te veel stof aan</td></tr>
+    <tr><td>Vlak voor de rit smeren</td><td>Olie heeft geen tijd om in te trekken</td></tr>
+    <tr><td>Buitenkant smeren</td><td>Geen effect, trekt alleen vuil aan</td></tr>
+  </table>
+
+  <div class="cta-block">
+    <h3>WEET JIJ WELK SMEERMIDDEL JE NODIG HEBT?</h3>
+    <p>Vul je producten in en krijg een persoonlijk onderhoudsplan op basis van jouw fiets en rijstijl.</p>
+    <a href="/" class="cta-btn">Gratis advies →</a>
+  </div>
+</div>
+
+<!-- ARTIKEL: OLIE VS WAX -->
+<div class="article-content" id="art-olie-vs-wax">
+  <button class="back-btn" onclick="toonOverzicht()">← Terug naar kennisbank</button>
+  <div class="article-tag">Smeermiddelen</div>
+  <h1>OLIE OF WAX: WAT IS BETER?</h1>
+  <div class="article-meta">Leestijd: 5 minuten · ChainGuide kennisbank</div>
+
+  <p>De supermarkt aan keuzes is overweldigend: wet lube, dry lube, ceramic lube, drip wax, hot wax. Elk merk claimt dat zijn product het beste is. Maar wat heb jij nou écht nodig?</p>
+
+  <h2>De twee hoofdcategorieën</h2>
+  <p>Alle kettingsmeermiddelen vallen in twee hoofdcategorieën: olie-gebaseerd en wax-gebaseerd. Het verschil zit hem in wat ze achterlaten op je ketting.</p>
+
+  <table>
+    <tr><th>Type</th><th>Voordelen</th><th>Nadelen</th><th>Geschikt voor</th></tr>
+    <tr><td><strong>Wet lube</strong></td><td>Blijft lang zitten, waterbestendig</td><td>Trekt vuil aan, ketting wordt zwart</td><td>Nat weer, lange ritten</td></tr>
+    <tr><td><strong>Dry lube</strong></td><td>Trekt weinig vuil aan, ketting blijft schoon</td><td>Spoelt sneller weg</td><td>Droog weer, zomer</td></tr>
+    <tr><td><strong>Drip wax</strong></td><td>Schone ketting, goede prestaties</td><td>Duurder, ketting moet schoon zijn</td><td>Allround, serieuze amateurs</td></tr>
+    <tr><td><strong>Hot wax</strong></td><td>Snelste optie, langste levensduur</td><td>Tijdrovend aanbrengen</td><td>Race, maximale prestaties</td></tr>
+  </table>
+
+  <h2>Wet lube vs dry lube</h2>
+  <p>De termen "wet" en "dry" verwijzen niet naar het weer, maar naar de consistentie van het smeermiddel. Wet lube is olieachtig en blijft vloeibaar op de ketting. Dry lube droogt op tot een dunne, droge film.</p>
+
+  <div class="tip-box">
+    <span class="tip-label">💡 Vuistregel</span>
+    <p>Rijd je in Nederland met wisselend weer? Kies een allround lube of drip wax. Ga je specifiek racen in droge omstandigheden? Dan is dry lube of wax de beste keuze.</p>
+  </div>
+
+  <h2>Waarom drip wax steeds populairder wordt</h2>
+  <p>Drip wax — zoals Dynamic Slick Wax, Squirt of Silca Super Secret — combineert het gemak van gewone olie met de voordelen van wax. Je brengt het aan zoals normale olie, maar het droogt op tot een waxlaag die weinig vuil aantrekt.</p>
+  <p>Het nadeel: je ketting moet echt schoon zijn voordat je het aanbrengt. Op een vuile ketting hecht wax slecht. Maar als je die stap niet overslaat, is het resultaat indrukwekkend: een schone, stille en efficiënte aandrijflijn.</p>
+
+  <div class="cta-block">
+    <h3>WELK SMEERMIDDEL PAST BIJ JOUW FIETS?</h3>
+    <p>Vul je producten in en krijg direct een persoonlijk advies.</p>
+    <a href="/" class="cta-btn">Gratis advies →</a>
+  </div>
+</div>
+
+<!-- ARTIKEL: HOE VAAK -->
+<div class="article-content" id="art-hoe-vaak">
+  <button class="back-btn" onclick="toonOverzicht()">← Terug naar kennisbank</button>
+  <div class="article-tag">Onderhoud</div>
+  <h1>HOE VAAK MOET JE JE KETTING ONDERHOUDEN?</h1>
+  <div class="article-meta">Leestijd: 3 minuten · ChainGuide kennisbank</div>
+
+  <p>Dit is de vraag die iedere fietser stelt. Het eerlijke antwoord: dat hangt af van drie dingen — hoe vaak je rijdt, onder welke omstandigheden en welk smeermiddel je gebruikt.</p>
+
+  <h2>Als vuistregel</h2>
+  <table>
+    <tr><th>Situatie</th><th>Frequentie</th></tr>
+    <tr><td>Droog weer, dry lube of wax</td><td>Elke 200-300 km</td></tr>
+    <tr><td>Wisselend weer, allround lube</td><td>Elke 150-200 km</td></tr>
+    <tr><td>Nat weer, modder, wet lube</td><td>Na elke natte rit</td></tr>
+    <tr><td>Hot wax</td><td>Elke 200-400 km</td></tr>
+    <tr><td>Indoor trainer</td><td>Elke 4-6 uur rijden</td></tr>
+  </table>
+
+  <h2>Wanneer weet je dat het nodig is?</h2>
+  <p>Je hoeft niet altijd op de kilometer af te tellen. Je ketting geeft zelf signalen:</p>
+  <ul>
+    <li>De ketting maakt geluid (piepen, knarsen)</li>
+    <li>Je ketting ziet er droog uit — geen glans meer</li>
+    <li>Je veegt met je vinger over de ketting en er komt weinig meer af</li>
+    <li>Na een rit in de regen of modder</li>
+  </ul>
+
+  <div class="tip-box">
+    <span class="tip-label">⚠️ Let op</span>
+    <p>Te veel smeren is ook slecht. Overtollig smeermiddel trekt vuil aan en wordt een abrasieve pasta die je ketting, cassette en tandwielen snel slijt. Veeg altijd het overtollige weg na het smeren.</p>
+  </div>
+
+  <div class="cta-block">
+    <h3>PERSOONLIJK ONDERHOUDSSCHEMA</h3>
+    <p>Vul je rijprofiel en producten in — ChainGuide berekent je ideale onderhoudsschema.</p>
+    <a href="/" class="cta-btn">Gratis advies →</a>
+  </div>
+</div>
+
+<!-- ARTIKEL: REINIGEN -->
+<div class="article-content" id="art-reinigen">
+  <button class="back-btn" onclick="toonOverzicht()">← Terug naar kennisbank</button>
+  <div class="article-tag">Reiniging</div>
+  <h1>KETTING REINIGEN: STAP VOOR STAP</h1>
+  <div class="article-meta">Leestijd: 4 minuten · ChainGuide kennisbank</div>
+
+  <p>Een vuile ketting slijt veel sneller dan een schone ketting. Het vuil mengt zich met je smeermiddel en vormt een schuurpasta die je ketting, cassette en tandwielen aanvalt. Regelmatig reinigen verlengt de levensduur van je hele aandrijflijn aanzienlijk.</p>
+
+  <h2>Wat heb je nodig?</h2>
+  <ul>
+    <li>Kettingontvetter (bijv. Dynamic Drivetrain Detox of Muc-Off Bio Degreaser)</li>
+    <li>Kettingborstel of tandenborstel</li>
+    <li>Schone, pluisvrije doeken</li>
+    <li>Optioneel: kettingreinigingsapparaat</li>
+  </ul>
+
+  <h2>De snelle methode (elke rit)</h2>
+  <p>Na elke rit hoef je niet diep te reinigen. Trek een schone doek om de ketting terwijl je de pedalen achteruit draait. Zo verwijder je het grove vuil van de buitenkant. Dit kost 30 seconden en houdt je ketting veel langer schoon.</p>
+
+  <h2>De grondige reiniging (maandelijks of na modder)</h2>
+  <ul>
+    <li><strong>Stap 1</strong> — Spuit ontvetter op de ketting en laat 2-3 minuten inwerken</li>
+    <li><strong>Stap 2</strong> — Schrobbel met een kettingborstel, focus op de schakels</li>
+    <li><strong>Stap 3</strong> — Spoel af met water (niet met hogedrukspuit)</li>
+    <li><strong>Stap 4</strong> — Droog af met een schone doek</li>
+    <li><strong>Stap 5</strong> — Laat volledig drogen voordat je smeert</li>
+  </ul>
+
+  <div class="tip-box">
+    <span class="tip-label">💡 Pro tip</span>
+    <p>Gebruik nooit een hogedrukspuiter op je ketting of lagers. De druk drijft water en vuil in plaatsen waar het niet thuishoort en versnelt slijtage drastisch.</p>
+  </div>
+
+  <div class="cta-block">
+    <h3>WEET JIJ HOE JE JOUW PRODUCTEN GEBRUIKT?</h3>
+    <p>Vul je producten in en krijg stap-voor-stap instructies specifiek voor jouw reiniger en smeermiddel.</p>
+    <a href="/" class="cta-btn">Gratis advies →</a>
+  </div>
+</div>
+
+<!-- ARTIKEL: HOT WAX -->
+<div class="article-content" id="art-hot-wax">
+  <button class="back-btn" onclick="toonOverzicht()">← Terug naar kennisbank</button>
+  <div class="article-tag">Gevorderd</div>
+  <h1>HOT WAX: DE COMPLETE GIDS</h1>
+  <div class="article-meta">Leestijd: 6 minuten · ChainGuide kennisbank</div>
+
+  <p>Hot wax is de afgelopen jaren enorm populair geworden onder serieuze amateurs en professionele renners. Team Jumbo-Visma reed de Tour de France op hot wax. Maar is het ook iets voor jou?</p>
+
+  <h2>Wat is hot wax?</h2>
+  <p>Bij hot wax smelt je een blok paraffine in een speciale heater. Je dompelt je ketting onder in de vloeibare wax, haalt hem eruit en laat hem afkoelen. De wax stolt in alle schakels van de ketting en vormt een droge, harde smeerlaag.</p>
+
+  <h2>Voordelen van hot wax</h2>
+  <ul>
+    <li><strong>Snelste aandrijflijn</strong> — Hot wax vermindert frictie significant. Tests tonen 5-8 watt besparing bij 250 watt vermogen.</li>
+    <li><strong>Schone ketting</strong> — Wax trekt geen vuil aan. Je ketting blijft wit en schoon.</li>
+    <li><strong>Langere levensduur</strong> — Minder vuil betekent minder slijtage van ketting, cassette en tandwielen.</li>
+    <li><strong>Milieuvriendelijker</strong> — Geen oliën of solventen nodig.</li>
+  </ul>
+
+  <h2>Wat heb je nodig?</h2>
+  <ul>
+    <li>Wax heater (bijv. Dynamic Waxifyer of een au bain marie opstelling)</li>
+    <li>Hot wax blokken (bijv. Dynamic Hyper, Wander Wax of Prime Wax)</li>
+    <li>Ontvetter voor de eerste keer (bijv. Dynamic Striptease)</li>
+    <li>Ultrasone reiniger of meerdere bad met ontvetter voor grondige reiniging</li>
+    <li>Quick link tang</li>
+  </ul>
+
+  <div class="tip-box">
+    <span class="tip-label">⚠️ Belangrijk</span>
+    <p>Voor de eerste keer hot waxen moet je ketting volledig vetvrij zijn — ook het fabrieksvet van een nieuwe ketting. Dit vereist meerdere beurten met ontvetter of een ultrasone reiniger. Sla deze stap niet over.</p>
+  </div>
+
+  <h2>Het proces stap voor stap</h2>
+  <ul>
+    <li><strong>Stap 1</strong> — Haal de ketting van de fiets (quick link)</li>
+    <li><strong>Stap 2</strong> — Ontvet grondig tot de ketting volledig vetvrij is</li>
+    <li><strong>Stap 3</strong> — Smelt de wax in de heater (ca. 90°C)</li>
+    <li><strong>Stap 4</strong> — Dompel de ketting 10-15 minuten onder</li>
+    <li><strong>Stap 5</strong> — Haal de ketting eruit en hang hem op om af te koelen</li>
+    <li><strong>Stap 6</strong> — Buig de ketting door voordat je hem monteert om de schakels los te maken</li>
+  </ul>
+
+  <h2>Hoe vaak opnieuw waxen?</h2>
+  <p>Dit hangt af van je rijomstandigheden. In droog weer kun je 300-500 km rijden per waxbeurt. In natte omstandigheden minder. Je ketting geeft het zelf aan: als hij droog klinkt of begint te piepen, is het tijd om opnieuw te waxen. De tweede en latere keren hoef je niet opnieuw te ontdersen — je veegt de ketting schoon en dompelt opnieuw onder.</p>
+
+  <div class="cta-block">
+    <h3>AL BEZIG MET HOT WAX?</h3>
+    <p>Vul je wax en producten in en krijg een persoonlijk onderhoudsplan.</p>
+    <a href="/" class="cta-btn">Gratis advies →</a>
+  </div>
+</div>
+
+<!-- ARTIKEL: SLIJTAGE -->
+<div class="article-content" id="art-slijtage">
+  <button class="back-btn" onclick="toonOverzicht()">← Terug naar kennisbank</button>
+  <div class="article-tag">Inspectie</div>
+  <h1>WANNEER IS JE KETTING VERSLETEN?</h1>
+  <div class="article-meta">Leestijd: 3 minuten · ChainGuide kennisbank</div>
+
+  <p>Een versleten ketting is duur — niet omdat een nieuwe ketting duur is, maar omdat een versleten ketting je cassette en tandwielen beschadigt. Die zijn een stuk duurder om te vervangen. Op tijd een nieuwe ketting monteren bespaart je honderden euro's.</p>
+
+  <h2>Hoe lang gaat een ketting mee?</h2>
+  <p>Een gemiddelde ketting gaat 2.000-3.000 km mee bij goed onderhoud. Bij slecht onderhoud of veel rijden in natte/modderige omstandigheden kan dit al na 1.000 km zijn. Met hot wax en goede reiniging kan een ketting 4.000+ km meegaan.</p>
+
+  <h2>Hoe check je kettingslijtage?</h2>
+  <p>De makkelijkste methode is met een kettingslijtagemeter — een goedkoop gereedschapje (€5-15) dat je in elke fietsenwinkel koopt. Je steekt hem in de ketting en hij geeft direct aan of de ketting nog goed is.</p>
+
+  <table>
+    <tr><th>Meting</th><th>Conclusie</th></tr>
+    <tr><td>0,5% of minder</td><td>Ketting is goed, doorgaan</td></tr>
+    <tr><td>0,5% - 0,75%</td><td>Ketting vervangen, cassette nog goed</td></tr>
+    <tr><td>0,75% of meer</td><td>Ketting én cassette vervangen</td></tr>
+  </table>
+
+  <h2>Zonder meter</h2>
+  <p>Pak je ketting halverwege vast en trek hem van het tandwiel. Als er meer dan een halve tand ruimte zit tussen ketting en tandwiel, is je ketting versleten. Dit is minder nauwkeurig maar geeft een goede indicatie.</p>
+
+  <div class="tip-box">
+    <span class="tip-label">💡 Tip</span>
+    <p>Check je ketting elke 500 km. Een kettingslijtagemeter kost minder dan €10 en bespaart je een nieuwe cassette van €50-200+.</p>
+  </div>
+
+  <div class="cta-block">
+    <h3>VERLENG DE LEVENSDUUR VAN JE KETTING</h3>
+    <p>Met het juiste onderhoudsplan gaat je ketting veel langer mee. Vul je producten in voor persoonlijk advies.</p>
+    <a href="/" class="cta-btn">Gratis advies →</a>
+  </div>
+</div>
+
+<footer>
+  <a href="/" class="logo" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:var(--accent);text-decoration:none">CHAINGUIDE</a>
+  <span>© 2025 — Fietsonderhoud op maat</span>
+</footer>
+
+<script>
+  function toonArtikel(id) {
+    document.getElementById('overzicht').style.display = 'none';
+    document.querySelectorAll('.article-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('art-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return false;
+  }
+
+  function toonOverzicht() {
+    document.getElementById('overzicht').style.display = 'block';
+    document.querySelectorAll('.article-content').forEach(el => el.classList.remove('active'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
