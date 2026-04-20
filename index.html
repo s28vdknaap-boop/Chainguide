@@ -365,11 +365,11 @@
   <div class="form-grid">
     <div class="form-group">
       <label>Jouw naam</label>
-      <input type="text" id="naam" placeholder="Naam">
+      <input type="text" id="naam" placeholder="Stan">
     </div>
     <div class="form-group">
       <label>E-mailadres</label>
-      <input type="email" id="email" placeholder="jouw@email.com">
+      <input type="email" id="email" placeholder="stan@email.com">
     </div>
 
     <div class="form-group">
@@ -395,7 +395,7 @@
 
     <div class="form-group">
       <label>Merk smeermiddel / kettingolie</label>
-      <select id="merk_olie">
+      <select id="merk_olie" onchange="updateProducten()">
         <option value="">Selecteer merk...</option>
         <option value="Dynamic">Dynamic</option>
         <option value="Muc-Off">Muc-Off</option>
@@ -408,21 +408,16 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label>Type smeermiddel / olie</label>
+    <div class="form-group" id="product_groep" style="display:none;">
+      <label>Product</label>
       <select id="type_olie">
-        <option value="">Selecteer type...</option>
-        <option value="dry_wax">Dry / Wax lube (droog weer)</option>
-        <option value="wet_lube">Wet lube (nat weer)</option>
-        <option value="ceramic_wax">Ceramic wax</option>
-        <option value="all_season">All-season</option>
-        <option value="weet_niet">Weet ik niet</option>
+        <option value="">Selecteer product...</option>
       </select>
     </div>
 
     <div class="form-group">
       <label>Merk reiniger / ontvetter</label>
-      <select id="merk_reiniger">
+      <select id="merk_reiniger" onchange="updateReiniger()">
         <option value="">Selecteer merk...</option>
         <option value="Dynamic">Dynamic</option>
         <option value="Muc-Off">Muc-Off</option>
@@ -430,6 +425,13 @@
         <option value="WD-40 Bike">WD-40 Bike</option>
         <option value="Geen">Geen reiniger in huis</option>
         <option value="anders">Anders</option>
+      </select>
+    </div>
+
+    <div class="form-group" id="reiniger_product_groep" style="display:none;">
+      <label>Reiniger product</label>
+      <select id="reiniger_product">
+        <option value="">Selecteer product...</option>
       </select>
     </div>
 
@@ -482,6 +484,116 @@
 </footer>
 
 <script>
+
+  // Producten per merk
+  const productenPerMerk = {
+    "Dynamic": [
+      "Speed Potion Wax (drip wax, race)",
+      "Slick Wax (drip wax, allround)",
+      "Hyper (hot wax)",
+      "Wander Wax (hot wax)",
+      "Prime Wax (hot wax)",
+      "Bio All Round Lube",
+      "E-bike kettingolie",
+      "Dry Fluid (droge omstandigheden)"
+    ],
+    "Muc-Off": [
+      "Wet Chain Lube",
+      "Dry Chain Lube",
+      "All Weather Chain Lube",
+      "C3 Ceramic Wet Lube",
+      "C3 Ceramic Dry Lube",
+      "Bio Wet Lube"
+    ],
+    "Finish Line": [
+      "Wet Lube",
+      "Dry Teflon Lube",
+      "Cross Country Lube",
+      "Ceramic Wet Lube",
+      "1-Step Cleaner & Lubricant"
+    ],
+    "WD-40 Bike": [
+      "All Conditions Lube",
+      "Wet Lube",
+      "Dry Lube",
+      "Chain Cleaner & Degreaser"
+    ],
+    "Squirt": [
+      "Long Lasting Dry Lube",
+      "Squirt Wax"
+    ],
+    "Silca": [
+      "Super Secret Chain Lube",
+      "Synergetic Wet Lube",
+      "NFS Hot Melt Wax"
+    ],
+    "Weldtite": [
+      "TF2 All Weather Lubricant",
+      "TF2 Extreme Wet Lube",
+      "TF2 Dry Lube with Teflon"
+    ]
+  };
+
+  const reinigersPerMerk = {
+    "Dynamic": [
+      "Drivetrain Detox ontvetter",
+      "Striptease kettingreiniger"
+    ],
+    "Muc-Off": [
+      "Bio Degreaser",
+      "Drivetrain Cleaner"
+    ],
+    "Finish Line": [
+      "Speed Clean",
+      "EcoTech Degreaser"
+    ],
+    "WD-40 Bike": [
+      "Chain Cleaner & Degreaser",
+      "Foaming Wash"
+    ]
+  };
+
+  function updateProducten() {
+    const merk = document.getElementById('merk_olie').value;
+    const productGroep = document.getElementById('product_groep');
+    const productSelect = document.getElementById('type_olie');
+
+    if (merk && productenPerMerk[merk]) {
+      productSelect.innerHTML = '<option value="">Selecteer product...</option>';
+      productenPerMerk[merk].forEach(product => {
+        const opt = document.createElement('option');
+        opt.value = product;
+        opt.textContent = product;
+        productSelect.appendChild(opt);
+      });
+      productGroep.style.display = 'flex';
+    } else if (merk === 'anders') {
+      productSelect.innerHTML = '<option value="weet_niet">Weet ik niet / anders</option>';
+      productGroep.style.display = 'flex';
+    } else {
+      productGroep.style.display = 'none';
+    }
+  }
+
+  function updateReiniger() {
+    const merk = document.getElementById('merk_reiniger').value;
+    const reinigersGroep = document.getElementById('reiniger_product_groep');
+    const reinigersSelect = document.getElementById('reiniger_product');
+
+    if (merk && reinigersPerMerk[merk]) {
+      reinigersSelect.innerHTML = '<option value="">Selecteer product...</option>';
+      reinigersPerMerk[merk].forEach(product => {
+        const opt = document.createElement('option');
+        opt.value = product;
+        opt.textContent = product;
+        reinigersSelect.appendChild(opt);
+      });
+      reinigersGroep.style.display = 'flex';
+    } else {
+      reinigersGroep.style.display = 'none';
+    }
+  }
+
   // Animate counters on load
   function animateCounter(id, target, suffix='') {
     let current = 0;
@@ -521,6 +633,7 @@
     const merkOlie = document.getElementById('merk_olie').value;
     const typeOlie = document.getElementById('type_olie').value;
     const merkReiniger = document.getElementById('merk_reiniger').value;
+    const reinigersProduct = document.getElementById('reiniger_product') ? document.getElementById('reiniger_product').value : '';
     const frequentie = document.getElementById('frequentie').value;
     const omstandigheden = document.getElementById('omstandigheden').value;
 
@@ -564,20 +677,9 @@ Geef ALLEEN de JSON array terug, geen uitleg, geen markdown backticks.`;
         body: JSON.stringify({ naam, rijder, fiets, merkOlie, typeOlie, merkReiniger, frequentie, omstandigheden })
       });
 
-    const text = await response.text();
-let steps;
-try {
-  const parsed = JSON.parse(text);
-  if (Array.isArray(parsed)) {
-    steps = parsed;
-  } else {
-    const clean = text.replace(/```json|```/g, '').trim();
-    steps = JSON.parse(clean);
-  }
-} catch(e) {
-  const clean = text.replace(/```json|```/g, '').trim();
-  steps = JSON.parse(clean);
-}
+      const text = await response.text();
+      const clean = text.replace(/```json|```/g, '').trim();
+      const steps = JSON.parse(clean);
 
       document.getElementById('loader').classList.remove('active');
       document.querySelector('.submit-btn').disabled = false;
