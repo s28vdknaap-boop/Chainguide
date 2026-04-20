@@ -564,9 +564,20 @@ Geef ALLEEN de JSON array terug, geen uitleg, geen markdown backticks.`;
         body: JSON.stringify({ naam, rijder, fiets, merkOlie, typeOlie, merkReiniger, frequentie, omstandigheden })
       });
 
-      const text = await response.text();
-      const clean = text.replace(/```json|```/g, '').trim();
-      const steps = JSON.parse(clean);
+    const text = await response.text();
+let steps;
+try {
+  const parsed = JSON.parse(text);
+  if (Array.isArray(parsed)) {
+    steps = parsed;
+  } else {
+    const clean = text.replace(/```json|```/g, '').trim();
+    steps = JSON.parse(clean);
+  }
+} catch(e) {
+  const clean = text.replace(/```json|```/g, '').trim();
+  steps = JSON.parse(clean);
+}
 
       document.getElementById('loader').classList.remove('active');
       document.querySelector('.submit-btn').disabled = false;
