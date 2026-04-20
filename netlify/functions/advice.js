@@ -49,6 +49,14 @@ Geef ALLEEN de JSON array terug, geen uitleg, geen markdown backticks.`;
       res.on('end', () => {
         try {
           const parsed = JSON.parse(data);
+          if (parsed.error) {
+            resolve({
+              statusCode: 500,
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ debug: parsed.error })
+            });
+            return;
+          }
           const text = parsed.content.map(i => i.text || '').join('');
           resolve({
             statusCode: 200,
@@ -56,13 +64,21 @@ Geef ALLEEN de JSON array terug, geen uitleg, geen markdown backticks.`;
             body: text
           });
         } catch(e) {
-          resolve({ statusCode: 500, body: 'Parse error: ' + e.message });
+          resolve({ 
+            statusCode: 500, 
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ debug: 'Parse error: ' + e.message, raw: data.substring(0, 200) })
+          });
         }
       });
     });
 
     req.on('error', (e) => {
-      resolve({ statusCode: 500, body: 'Request error: ' + e.message });
+      resolve({ 
+        statusCode: 500, 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ debug: 'Request error: ' + e.message })
+      });
     });
 
     req.write(postData);
