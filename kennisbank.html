@@ -43,33 +43,34 @@
     top: 0; left: 0; right: 0;
     z-index: 100;
     padding: 0 6vw;
-    height: 64px;
+    height: 54px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(244, 241, 235, 0.95);
-    backdrop-filter: blur(12px);
+    background: rgba(244, 241, 235, 0.92);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
 
   .nav-logo {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 400;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     color: var(--ink);
     text-decoration: none;
   }
 
   .nav-cta {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
+    font-size: 0.64rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--ink);
     text-decoration: none;
     border-bottom: 1px solid var(--ink);
-    padding-bottom: 1px;
-    transition: color 0.2s;
+    padding-bottom: 2px;
+    transition: color 0.25s ease, border-color 0.25s ease;
   }
   .nav-cta:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
 
@@ -119,18 +120,18 @@
 
   /* ARTICLE GRID */
   .articles {
-    padding: 0 6vw 100px;
+    padding: 0 6vw 120px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 2px;
     background: var(--border);
   }
 
   .article-card {
     background: var(--paper);
-    padding: 40px 36px;
+    padding: 56px 44px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.25s ease;
     text-decoration: none;
     color: inherit;
     display: block;
@@ -139,24 +140,28 @@
 
   .article-tag {
     font-size: 0.6rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 12px;
+    margin-bottom: 18px;
     display: block;
   }
 
   .article-card h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
+    font-size: 1.75rem;
     font-weight: 400;
-    margin-bottom: 10px;
-    line-height: 1.25;
+    margin-bottom: 14px;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
   }
 
+  .article-card:hover h2 { color: var(--accent-dark); }
+
   .article-card p {
-    font-size: 0.84rem;
-    line-height: 1.7;
+    font-size: 0.9rem;
+    line-height: 1.75;
     color: var(--muted);
   }
 
@@ -565,7 +570,7 @@
     <p class="hero-sub">Alles over fietsonderhoud — van kettingvet kiezen tot hot wax. Praktische uitleg voor de serieuze fietser.</p>
   </div>
 
-  <div class="articles"><div class="articles">
+  <div class="articles">
 
     <a class="article-card" onclick="toonArtikel('ketting-smeren')" href="#">
       <div class="article-tag">Basis</div>
