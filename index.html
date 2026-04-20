@@ -38,40 +38,41 @@
     top: 0; left: 0; right: 0;
     z-index: 100;
     padding: 0 6vw;
-    height: 64px;
+    height: 54px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(244, 241, 235, 0.95);
-    backdrop-filter: blur(12px);
+    background: rgba(244, 241, 235, 0.92);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
 
   .nav-logo {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 400;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     color: var(--ink);
     text-decoration: none;
   }
 
-  .nav-links { display: flex; align-items: center; gap: 40px; }
+  .nav-links { display: flex; align-items: center; gap: 36px; }
 
   .nav-link {
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
+    font-size: 0.64rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--muted);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.25s ease;
   }
   .nav-link:hover { color: var(--ink); }
 
   /* HERO — split layout */
   #hero {
     min-height: 100vh;
-    padding-top: 64px;
+    padding-top: 54px;
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
@@ -162,6 +163,36 @@
     opacity: 0;
     animation: fadeUp 0.7s ease forwards 0.2s;
   }
+
+  /* FORM PROGRESS — anchored at top of form panel, visible at all times */
+  .form-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(200,169,110,0.12);
+    z-index: 5;
+  }
+
+  .form-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 0.5s cubic-bezier(.2,.7,.2,1);
+  }
+
+  .form-progress-label {
+    position: absolute;
+    top: 14px;
+    right: 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.55);
+  }
+
 
   .form-panel-eyebrow {
     font-size: 0.65rem;
@@ -312,6 +343,14 @@
     padding: 36px;
     margin-bottom: 16px;
     animation: fadeUp 0.5s ease forwards;
+    transition: border-left-width 0.35s ease, border-color 0.35s ease, transform 0.45s cubic-bezier(.2,.7,.2,1), background 0.35s ease;
+  }
+
+  .advice-card:hover {
+    border-left-width: 6px;
+    border-color: #d6d0c5;
+    background: var(--warm);
+    transform: translateX(4px);
   }
 
   .advice-card h3 {
@@ -320,7 +359,10 @@
     font-weight: 400;
     margin-bottom: 12px;
     color: var(--ink);
+    transition: color 0.3s ease;
   }
+
+  .advice-card:hover h3 { color: var(--accent-dark); }
 
   .advice-card p {
     font-size: 0.9rem;
@@ -336,6 +378,12 @@
     line-height: 1;
     margin-left: 16px;
     font-weight: 300;
+    transition: color 0.4s ease, transform 0.4s ease;
+  }
+
+  .advice-card:hover .step-num {
+    color: var(--accent);
+    transform: translateX(-4px);
   }
 
   .tag {
@@ -369,7 +417,7 @@
 
   /* JOURNAL SECTION */
   .journal-section {
-    padding: 100px 6vw;
+    padding: 140px 6vw 120px;
     background: var(--warm);
   }
 
@@ -377,24 +425,30 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 48px;
+    margin-bottom: 72px;
     border-bottom: 1px solid var(--border);
-    padding-bottom: 20px;
+    padding-bottom: 32px;
+    gap: 48px;
   }
 
   .section-eyebrow {
     font-size: 0.65rem;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 8px;
+    margin-bottom: 14px;
   }
 
   .section-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(24px, 3vw, 38px);
+    font-size: clamp(44px, 6vw, 78px);
     font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    max-width: 680px;
   }
+
+  .section-title em { font-style: italic; color: var(--accent-dark); }
 
   .section-link {
     font-size: 0.68rem;
@@ -418,20 +472,20 @@
 
   .journal-card {
     background: var(--paper);
-    padding: 36px 32px;
+    padding: 48px 40px;
     text-decoration: none;
     color: inherit;
     display: block;
-    transition: background 0.2s;
+    transition: background 0.25s ease;
   }
   .journal-card:hover { background: var(--warm); }
 
   .journal-card.featured {
     grid-row: span 2;
-    min-height: 420px;
+    min-height: 520px;
     background: var(--ink);
     color: var(--paper);
-    padding: 48px;
+    padding: 56px;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -465,16 +519,22 @@
 
   .journal-card h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
+    font-size: 1.55rem;
     font-weight: 400;
-    line-height: 1.3;
-    margin-bottom: 10px;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    transition: color 0.3s ease;
   }
 
-  .journal-card.featured h3 { font-size: 1.7rem; color: var(--paper); }
+  .journal-card:hover h3 { color: var(--accent-dark); }
+  .journal-card.featured:hover h3 { color: var(--accent); }
 
-  .journal-card p { font-size: 0.8rem; line-height: 1.6; color: var(--muted); }
-  .journal-card.featured p { color: #aaa; }
+  .journal-card.featured h3 { font-size: 2.2rem; color: var(--paper); line-height: 1.15; }
+  .journal-card h3 em { font-style: italic; color: var(--accent); }
+
+  .journal-card p { font-size: 0.88rem; line-height: 1.7; color: var(--muted); }
+  .journal-card.featured p { color: #aaa; font-size: 0.95rem; line-height: 1.7; }
 
   .read-arrow {
     display: inline-block;
@@ -618,16 +678,15 @@
   /* FORM PANEL — enhanced */
   .form-panel {
     position: relative;
-    overflow: hidden;
   }
 
   .form-panel::before {
     content: '';
     position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 400px;
-    height: 400px;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 320px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
     pointer-events: none;
@@ -798,6 +857,10 @@
 
   <!-- RIGHT: Form -->
   <div class="form-panel">
+    <div class="form-progress">
+      <div class="form-progress-fill" id="form-progress-fill"></div>
+      <span class="form-progress-label" id="form-progress-label">0%</span>
+    </div>
     <div class="chain-graphic">
       <div class="chain-link"></div><div class="chain-link"></div><div class="chain-link"></div>
       <div class="chain-link"></div><div class="chain-link"></div><div class="chain-link"></div>
@@ -929,7 +992,7 @@
     <div>
       <div class="section-num">— 01</div>
       <div class="section-eyebrow">From the journal</div>
-      <h2 class="section-title">Drivetrain knowledge</h2>
+      <h2 class="section-title">Drivetrain<br><em>knowledge.</em></h2>
     </div>
     <a href="/kennisbank.html" class="section-link">View all →</a>
   </div>
@@ -940,7 +1003,7 @@
         <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80&fit=crop" alt="Cycling" loading="lazy">
       </div>
       <span class="journal-card-tag">Essential reading</span>
-      <h3>How to lube your chain correctly — and why most riders get it wrong</h3>
+      <h3>How to lube your chain <em>correctly</em> — and why most riders get it wrong</h3>
       <p>Too much, too little, wrong timing. The most common mistakes fixed.</p>
       <span class="read-arrow">Read article →</span>
     </a>
@@ -1078,6 +1141,7 @@
     } else {
       productGroep.style.display = 'none';
     }
+    updateFormProgress();
   }
 
   function updateReiniger() {
@@ -1097,7 +1161,37 @@
     } else {
       reinigersGroep.style.display = 'none';
     }
+    updateFormProgress();
   }
+
+  // FORM PROGRESS — sticky progress bar
+  function updateFormProgress() {
+    const base = ['naam', 'email', 'rijder_type', 'fiets_type', 'merk_olie', 'merk_reiniger', 'frequentie', 'omstandigheden'];
+    const all = base.slice();
+    const merkOlie = document.getElementById('merk_olie').value;
+    const merkReiniger = document.getElementById('merk_reiniger').value;
+    if (merkOlie) all.push('type_olie');
+    if (merkReiniger && merkReiniger !== 'Geen') all.push('reiniger_product');
+
+    const filled = all.filter(id => {
+      const el = document.getElementById(id);
+      return el && el.value && el.value.trim() !== '';
+    }).length;
+    const pct = Math.round((filled / all.length) * 100);
+    const fill = document.getElementById('form-progress-fill');
+    const label = document.getElementById('form-progress-label');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+  }
+
+  // Hook up listeners once DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.form-panel input, .form-panel select').forEach(el => {
+      el.addEventListener('input', updateFormProgress);
+      el.addEventListener('change', updateFormProgress);
+    });
+    updateFormProgress();
+  });
 
   // Animate counters on load
   function animateCounter(id, target, suffix='') {
