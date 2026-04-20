@@ -37,17 +37,19 @@ exports.handler = async function(event) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const { naam, rijder, fiets, merkOlie, typeOlie, merkReiniger, frequentie, omstandigheden } = JSON.parse(event.body);
+  const { naam, email, rijder, fiets, merkOlie, typeOlie, merkReiniger, reinigersProduct, frequentie, omstandigheden } = JSON.parse(event.body);
 
   // Sla data op in Supabase
   try {
     await supabaseInsert({
       naam,
+      email,
       rijder_type: rijder,
       fiets_type: fiets,
       merk_olie: merkOlie,
       product_olie: typeOlie,
       merk_reiniger: merkReiniger,
+      product_reiniger: reinigersProduct,
       frequentie,
       omstandigheden
     });
