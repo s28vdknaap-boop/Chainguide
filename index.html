@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChainGuide — Fietsonderhoud op maat</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ec;
+    --accent: #e8ff00;
+    --grey: #1a1a1a;
+    --mid: #2e2e2e;
+    --text-muted: #888;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 6vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,255,0,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    color: var(--accent);
+    margin-bottom: 80px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+  }
+
+  .hero-tag {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 12vw, 160px);
+    line-height: 0.92;
+    letter-spacing: -1px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.3s;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .hero-sub {
+    max-width: 480px;
+    margin-top: 32px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #aaa;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.5s;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    margin-top: 48px;
+    padding: 16px 40px;
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.65s;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(232,255,0,0.25);
+  }
+
+  /* FORM SECTION */
+  #form-section {
+    background: var(--grey);
+    padding: 80px 6vw;
+    display: none;
+  }
+
+  #form-section.visible { display: block; }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 64px);
+    margin-bottom: 48px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 800px;
+  }
+
+  @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  select, input[type="text"], input[type="email"] {
+    background: var(--mid);
+    border: 1px solid #333;
+    color: var(--white);
+    padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  select:focus, input:focus { border-color: var(--accent); }
+
+  select option { background: var(--mid); }
+
+  .submit-btn {
+    margin-top: 16px;
+    padding: 16px 48px;
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(232,255,0,0.25);
+  }
+
+  /* ADVICE SECTION */
+  #advice-section {
+    padding: 80px 6vw;
+    display: none;
+    max-width: 900px;
+  }
+
+  #advice-section.visible { display: block; }
+
+  .advice-card {
+    background: var(--grey);
+    border-left: 3px solid var(--accent);
+    padding: 32px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  .advice-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    color: var(--accent);
+  }
+
+  .advice-card p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #ccc;
+  }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: #222;
+    float: right;
+    line-height: 1;
+    margin-left: 16px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    background: rgba(232,255,0,0.1);
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  /* DATA COUNTER */
+  .data-strip {
+    background: var(--black);
+    border-top: 1px solid #1e1e1e;
+    padding: 40px 6vw;
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .stat { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* LOADER */
+  .loader {
+    display: none;
+    margin: 32px 0;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .loader.active { display: block; }
+  .loader::after {
+    content: '...';
+    animation: dots 1.2s steps(3, end) infinite;
+  }
+  @keyframes dots {
+    0%,20% { content: '.'; }
+    40%,60% { content: '..'; }
+    80%,100% { content: '...'; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* BACK BUTTON */
+  .back-btn {
+    background: none;
+    border: 1px solid #333;
+    color: var(--text-muted);
+    padding: 10px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 40px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .back-btn:hover { border-color: var(--accent); color: var(--white); }
+
+  /* PRIVACY NOTE */
+  .privacy-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 6vw;
+    border-top: 1px solid #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer span { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header id="hero">
+  <div class="logo">CHAINGUIDE</div>
+  <div class="hero-tag">Fietsonderhoud op maat</div>
+  <h1>JOUW FIETS.<br><span>PERFECT</span><br>ONDERHOUDEN.</h1>
+  <p class="hero-sub">Vul in welke producten je hebt en wij vertellen je stap voor stap hoe je ze optimaal gebruikt. Geen gedoe, geen twijfel.</p>
+  <button class="cta-btn" onclick="showForm()">Start nu — het is gratis</button>
+</header>
+
+<!-- STATS STRIP -->
+<div class="data-strip" id="stats-strip">
+  <div class="stat">
+    <div class="stat-num" id="counter-users">0</div>
+    <div class="stat-label">Renners geholpen</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="counter-products">0</div>
+    <div class="stat-label">Producten geregistreerd</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="counter-brands">0</div>
+    <div class="stat-label">Merken in database</div>
+  </div>
+</div>
+
+<!-- FORM SECTION -->
+<section id="form-section">
+  <div class="section-label">Stap 1 van 2</div>
+  <h2 class="section-title">Jouw producten &amp; fiets</h2>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label>Jouw naam</label>
+      <input type="text" id="naam" placeholder="Stan">
+    </div>
+    <div class="form-group">
+      <label>E-mailadres</label>
+      <input type="email" id="email" placeholder="stan@email.com">
+    </div>
+
+    <div class="form-group">
+      <label>Type rijder</label>
+      <select id="rijder_type">
+        <option value="">Selecteer...</option>
+        <option value="recreatief">Recreatief (toerrijder)</option>
+        <option value="amateur">Serieuze amateur (races, watts)</option>
+        <option value="semi_pro">Semi-professioneel</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Type fiets</label>
+      <select id="fiets_type">
+        <option value="">Selecteer...</option>
+        <option value="race">Racefiets</option>
+        <option value="gravel">Gravel</option>
+        <option value="mtb">MTB</option>
+        <option value="ebike">E-bike</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Merk smeermiddel / kettingolie</label>
+      <select id="merk_olie">
+        <option value="">Selecteer merk...</option>
+        <option value="Dynamic">Dynamic</option>
+        <option value="Muc-Off">Muc-Off</option>
+        <option value="Finish Line">Finish Line</option>
+        <option value="WD-40 Bike">WD-40 Bike</option>
+        <option value="Squirt">Squirt</option>
+        <option value="Silca">Silca</option>
+        <option value="Weldtite">Weldtite</option>
+        <option value="anders">Anders / weet ik niet</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Type smeermiddel / olie</label>
+      <select id="type_olie">
+        <option value="">Selecteer type...</option>
+        <option value="dry_wax">Dry / Wax lube (droog weer)</option>
+        <option value="wet_lube">Wet lube (nat weer)</option>
+        <option value="ceramic_wax">Ceramic wax</option>
+        <option value="all_season">All-season</option>
+        <option value="weet_niet">Weet ik niet</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Merk reiniger / ontvetter</label>
+      <select id="merk_reiniger">
+        <option value="">Selecteer merk...</option>
+        <option value="Dynamic">Dynamic</option>
+        <option value="Muc-Off">Muc-Off</option>
+        <option value="Finish Line">Finish Line</option>
+        <option value="WD-40 Bike">WD-40 Bike</option>
+        <option value="Geen">Geen reiniger in huis</option>
+        <option value="anders">Anders</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Hoe vaak rijd je per week?</label>
+      <select id="frequentie">
+        <option value="">Selecteer...</option>
+        <option value="1x">1x per week</option>
+        <option value="2-3x">2-3x per week</option>
+        <option value="4-5x">4-5x per week</option>
+        <option value="dagelijks">Bijna dagelijks</option>
+      </select>
+    </div>
+
+    <div class="form-group full">
+      <label>Omstandigheden (meerdere mogelijk)</label>
+      <select id="omstandigheden">
+        <option value="">Selecteer...</option>
+        <option value="droog">Voornamelijk droog weer</option>
+        <option value="wisselend">Wisselend weer</option>
+        <option value="nat_modder">Veel regen / modder</option>
+        <option value="indoor">Voornamelijk indoor (trainer)</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <button class="submit-btn" onclick="generateAdvice()">Genereer mijn onderhoudsplan →</button>
+  </div>
+
+  <div class="loader" id="loader">Advies wordt samengesteld</div>
+
+  <p class="privacy-note">
+    🔒 Je gegevens worden anoniem opgeslagen en nooit verkocht aan derden.<br>
+    We gebruiken ze alleen om betere adviezen te geven en trends in productgebruik te analyseren.
+  </p>
+</section>
+
+<!-- ADVICE SECTION -->
+<section id="advice-section">
+  <button class="back-btn" onclick="goBack()">← Nieuwe analyse</button>
+  <div class="section-label">Jouw persoonlijk onderhoudsplan</div>
+  <h2 class="section-title" id="advice-title">KLAAR, <span style="color:var(--accent)">STAN</span></h2>
+  <div id="advice-cards"></div>
+</section>
+
+<footer>
+  <span class="logo" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:var(--accent)">CHAINGUIDE</span>
+  <span>© 2025 — Fietsonderhoud op maat</span>
+</footer>
+
+<script>
+  // Animate counters on load
+  function animateCounter(id, target, suffix='') {
+    let current = 0;
+    const step = Math.ceil(target / 60);
+    const el = document.getElementById(id);
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current.toLocaleString('nl') + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 30);
+  }
+
+  // Simulate existing data (will be real once database is connected)
+  setTimeout(() => {
+    animateCounter('counter-users', 247);
+    animateCounter('counter-products', 1043);
+    animateCounter('counter-brands', 14);
+  }, 800);
+
+  function showForm() {
+    document.getElementById('hero').style.display = 'none';
+    document.getElementById('stats-strip').style.display = 'none';
+    document.getElementById('form-section').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goBack() {
+    document.getElementById('advice-section').classList.remove('visible');
+    document.getElementById('form-section').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function generateAdvice() {
+    const naam = document.getElementById('naam').value || 'renner';
+    const rijder = document.getElementById('rijder_type').value;
+    const fiets = document.getElementById('fiets_type').value;
+    const merkOlie = document.getElementById('merk_olie').value;
+    const typeOlie = document.getElementById('type_olie').value;
+    const merkReiniger = document.getElementById('merk_reiniger').value;
+    const frequentie = document.getElementById('frequentie').value;
+    const omstandigheden = document.getElementById('omstandigheden').value;
+
+    if (!merkOlie || !typeOlie || !rijder) {
+      alert('Vul minimaal je rijdersprofiel en smeermiddel in.');
+      return;
+    }
+
+    // Save data locally (in real app: POST to backend)
+    const userData = { naam, rijder, fiets, merkOlie, typeOlie, merkReiniger, frequentie, omstandigheden, timestamp: new Date().toISOString() };
+    const existing = JSON.parse(localStorage.getItem('chainguide_data') || '[]');
+    existing.push(userData);
+    localStorage.setItem('chainguide_data', JSON.stringify(existing));
+
+    document.getElementById('loader').classList.add('active');
+    document.querySelector('.submit-btn').disabled = true;
+
+    
+
+    const prompt = `Je bent een expert fietsonderhoud adviseur bij het platform ChainGuide. Geef een concreet, stap-voor-stap onderhoudsplan voor:
+
+- Naam: ${naam}
+- Rijdersprofiel: ${rijder}
+- Fietstype: ${fiets}
+- Smeermiddel: ${merkOlie} — type: ${typeOlie}
+- Reiniger: ${merkReiniger}
+- Rijfrequentie: ${frequentie}
+- Rijomstandigheden: ${omstandigheden}
+
+Geef exact 4 stappen terug als JSON array. Elke stap heeft:
+- "titel": korte staptitel (max 4 woorden)
+- "tag": één woord categorie (bijv. REINIGING, SMERING, INSPECTIE, TIMING)
+- "inhoud": gedetailleerde instructie van 3-5 zinnen, specifiek voor de bovenstaande producten en omstandigheden. Noem het merk bij naam. Wees praktisch en concreet.
+
+Geef ALLEEN de JSON array terug, geen uitleg, geen markdown backticks.`;
+
+    try {
+      const response = await fetch("/.netlify/functions/advice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ naam, rijder, fiets, merkOlie, typeOlie, merkReiniger, frequentie, omstandigheden })
+      });
+
+      const text = await response.text();
+      const clean = text.replace(/```json|```/g, '').trim();
+      const steps = JSON.parse(clean);
+
+      document.getElementById('loader').classList.remove('active');
+      document.querySelector('.submit-btn').disabled = false;
+      document.getElementById('form-section').classList.remove('visible');
+
+      const adviceSection = document.getElementById('advice-section');
+      document.getElementById('advice-title').innerHTML = `KLAAR, <span style="color:var(--accent)">${naam.toUpperCase()}</span>`;
+
+      const cards = document.getElementById('advice-cards');
+      cards.innerHTML = '';
+
+      steps.forEach((step, i) => {
+        const card = document.createElement('div');
+        card.className = 'advice-card';
+        card.style.animationDelay = `${i * 0.12}s`;
+        card.style.opacity = '0';
+        card.innerHTML = `
+          <span class="step-num">0${i+1}</span>
+          <div class="tag">${step.tag}</div>
+          <h3>${step.titel}</h3>
+          <p>${step.inhoud}</p>
+        `;
+        cards.appendChild(card);
+        setTimeout(() => { card.style.opacity = '1'; }, i * 120);
+      });
+
+      adviceSection.classList.add('visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      document.getElementById('loader').classList.remove('active');
+      document.querySelector('.submit-btn').disabled = false;
+      alert('Er ging iets mis bij het genereren van het advies. Probeer opnieuw.');
+      console.error(err);
+    }
+  }
+</script>
+</body>
+</html>
