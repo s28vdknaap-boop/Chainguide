@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starter kit — Persoonlijk fietsonderhoud advies voor beginners | ChainGuide</title>
+<meta name="description" content="Nog geen onderhoudsspullen? Krijg een persoonlijk startpakket — welke kettingolie, reiniger en gereedschap je écht nodig hebt, afgestemd op jouw fiets en rijstijl.">
+<link rel="canonical" href="https://chainguide.nl/starter">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<meta property="og:title" content="Starter kit — ChainGuide">
+<meta property="og:description" content="Nog geen onderhoudsspullen? Krijg een persoonlijk startpakket, afgestemd op jouw fiets en rijstijl.">
+<meta property="og:url" content="https://chainguide.nl/starter">
+<meta property="og:type" content="website">
+
+<style>
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f4f1eb;
+    --warm: #f9f6f0;
+    --accent: #c8a96e;
+    --accent-dark: #a8893e;
+    --muted: #8a8278;
+    --border: #e0dbd2;
+    --grey-light: #f0ece4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV — matched across pages */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 6vw;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(244, 241, 235, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 36px; }
+
+  .nav-link {
+    font-size: 0.64rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+  .nav-link:hover { color: var(--ink); }
+  .nav-link.active { color: var(--ink); }
+
+  /* HERO — split layout, mirrors homepage */
+  #hero {
+    min-height: 100vh;
+    padding-top: 54px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-left {
+    padding: 80px 6vw 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: '00';
+    position: absolute;
+    bottom: -40px;
+    left: -20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 300px;
+    font-weight: 700;
+    color: rgba(14,14,14,0.03);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    top: 80px;
+    right: 0;
+    width: 1px;
+    height: calc(100% - 160px);
+    background: linear-gradient(to bottom, transparent, var(--border) 20%, var(--border) 80%, transparent);
+  }
+
+  .deco-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.1s;
+  }
+
+  .deco-line::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .deco-line-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .deco-line::after {
+    content: '✦';
+    font-size: 0.5rem;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 4.5vw, 68px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.25s;
+  }
+
+  h1 em { font-style: italic; color: var(--accent-dark); }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 400px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.4s;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.55s;
+  }
+
+  .hero-meta-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .hero-meta-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .hero-alt-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 32px;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    width: fit-content;
+    transition: color 0.25s ease, border-color 0.25s ease, gap 0.25s ease;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.7s;
+  }
+  .hero-alt-link:hover { color: var(--ink); border-color: var(--ink); gap: 14px; }
+
+  /* FORM PANEL — right side, dark */
+  .form-panel {
+    background: var(--ink);
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.2s;
+    position: relative;
+  }
+
+  .form-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .form-panel::after {
+    content: '';
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    width: 80px;
+    height: 80px;
+    border: 1px solid rgba(200,169,110,0.15);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* FORM PROGRESS — anchored at top */
+  .form-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(200,169,110,0.12);
+    z-index: 5;
+  }
+
+  .form-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 0.5s cubic-bezier(.2,.7,.2,1);
+  }
+
+  .form-progress-label {
+    position: absolute;
+    top: 14px;
+    right: 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.55);
+  }
+
+  .form-panel-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .form-panel-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .form-panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 2.5vw, 36px);
+    font-weight: 400;
+    color: var(--paper);
+    margin-bottom: 40px;
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+  }
+
+  .form-panel h2 em { font-style: italic; color: var(--accent); }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #666;
+  }
+
+  select, input[type="text"], input[type="email"] {
+    background: #1a1a1a;
+    border: 1px solid #2e2e2e;
+    color: var(--paper);
+    padding: 11px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  select:focus, input:focus { border-color: var(--accent); }
+  select option { background: #1a1a1a; color: var(--paper); }
+
+  .submit-btn {
+    margin-top: 24px;
+    padding: 13px 40px;
+    background: var(--accent);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .submit-btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+  .privacy-note {
+    font-size: 0.65rem;
+    color: #444;
+    margin-top: 16px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  .loader {
+    display: none;
+    margin: 16px 0;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    position: relative;
+    z-index: 1;
+  }
+  .loader.active { display: block; }
+  .loader::after {
+    content: '...';
+    animation: dots 1.2s steps(3, end) infinite;
+  }
+  @keyframes dots {
+    0%,20% { content: '.'; }
+    40%,60% { content: '..'; }
+    80%,100% { content: '...'; }
+  }
+
+  /* RESULT SECTION */
+  #result-section {
+    display: none;
+    padding: 120px 6vw 100px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  #result-section.visible { display: block; }
+
+  .back-btn {
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0 0 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 48px;
+    transition: color 0.2s, border-color 0.2s, gap 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .back-btn:hover { color: var(--ink); border-color: var(--ink); gap: 12px; }
+
+  .result-header { margin-bottom: 48px; }
+
+  .result-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  #result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  #result-title em { font-style: italic; color: var(--accent-dark); }
+
+  .result-intro {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-top: 20px;
+    max-width: 560px;
+  }
+
+  .rec-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 36px;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+    position: relative;
+    overflow: hidden;
+    transition: border-left-width 0.35s ease, border-color 0.35s ease, transform 0.45s cubic-bezier(.2,.7,.2,1), background 0.35s ease;
+  }
+
+  .rec-card:hover {
+    border-left-width: 6px;
+    border-color: #d6d0c5;
+    background: var(--warm);
+    transform: translateX(4px);
+  }
+
+  .rec-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle at top right, rgba(200,169,110,0.04), transparent 70%);
+    pointer-events: none;
+  }
+
+  .rec-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    background: var(--grey-light);
+    color: var(--accent-dark);
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+  }
+
+  .rec-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--ink);
+    transition: color 0.3s ease;
+  }
+
+  .rec-card:hover h3 { color: var(--accent-dark); }
+
+  .rec-card .rec-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-dark);
+    margin-bottom: 14px;
+    letter-spacing: 0.08em;
+  }
+
+  .rec-card p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: #555;
+    margin-bottom: 12px;
+  }
+
+  .rec-card .rec-why {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    margin-top: 18px;
+    font-style: italic;
+  }
+
+  .rec-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 3rem;
+    color: var(--border);
+    float: right;
+    line-height: 1;
+    margin-left: 16px;
+    font-weight: 300;
+    transition: color 0.4s ease, transform 0.4s ease;
+  }
+
+  .rec-card:hover .rec-num {
+    color: var(--accent);
+    transform: translateX(-4px);
+  }
+
+  .budget-summary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 44px 48px;
+    margin: 48px 0 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .budget-summary::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, var(--accent-dark), var(--accent), transparent);
+  }
+
+  .budget-summary-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .budget-summary-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .budget-summary-value em { font-style: italic; color: var(--accent); }
+
+  .budget-summary p {
+    font-size: 0.88rem;
+    color: #999;
+    margin-top: 14px;
+    line-height: 1.7;
+    max-width: 540px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    padding: 60px 6vw 40px;
+  }
+
+  footer::before {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(to right, var(--accent-dark), var(--accent), transparent);
+    margin-bottom: 60px;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #2a2a2a;
+    margin-bottom: 28px;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--paper);
+    font-weight: 400;
+  }
+
+  .footer-tagline { font-size: 0.72rem; color: #555; margin-top: 6px; }
+
+  .footer-links { display: flex; gap: 32px; }
+
+  .footer-link {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-link:hover { color: var(--paper); }
+
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 0.65rem; color: #444; letter-spacing: 0.06em; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .form-panel { padding: 60px 6vw; }
+    .hero-meta { flex-wrap: wrap; gap: 24px; }
+    .footer-top { flex-direction: column; gap: 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links .nav-link:not(.nav-cta) { display: none; }
+    .budget-summary { padding: 32px 28px; }
+    .budget-summary-value { font-size: 1.6rem; }
+  }
+
+  /* TEXTURE & DEPTH */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">ChainGuide</a>
+  <div class="nav-links">
+    <a href="/starter.html" class="nav-link active">Starter kit</a>
+    <a href="/kennisbank.html" class="nav-link">Journal</a>
+  </div>
+</nav>
+
+<!-- HERO + FORM -->
+<div id="hero">
+
+  <!-- LEFT: Brand -->
+  <div class="hero-left">
+    <div class="deco-line"><span class="deco-line-text">Begin bij nul</span></div>
+    <h1>Geen spullen?<br><em>Begin</em> hier.</h1>
+    <p class="hero-sub">Voor wie net begint met serieus onderhoud. Beantwoord een paar vragen — we stellen een startpakket samen dat past bij jouw fiets, ritme en budget. Geen overbodige producten, geen verkeerde keuzes.</p>
+    <div class="hero-meta">
+      <div>
+        <div class="hero-meta-label">Tijd</div>
+        <div class="hero-meta-value">2 min</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Output</div>
+        <div class="hero-meta-value">Shopping list</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Kosten</div>
+        <div class="hero-meta-value">Gratis</div>
+      </div>
+    </div>
+    <a href="/" class="hero-alt-link">Heb je al spullen? Ga naar het hoofdformulier →</a>
+  </div>
+
+  <!-- RIGHT: Form -->
+  <div class="form-panel">
+    <div class="form-progress">
+      <div class="form-progress-fill" id="form-progress-fill"></div>
+      <span class="form-progress-label" id="form-progress-label">0%</span>
+    </div>
+
+    <div class="form-panel-eyebrow">Starter intake</div>
+    <h2>Jouw profiel<br>& <em>budget</em></h2>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Jouw naam</label>
+        <input type="text" id="naam" placeholder="Jouw naam">
+      </div>
+      <div class="form-group">
+        <label>E-mailadres</label>
+        <input type="email" id="email" placeholder="jouw@email.com">
+      </div>
+
+      <div class="form-group">
+        <label>Type rijder</label>
+        <select id="rijder_type">
+          <option value="">Selecteer...</option>
+          <option value="recreatief">Recreatief (toerrijder)</option>
+          <option value="amateur">Serieuze amateur</option>
+          <option value="semi_pro">Semi-professioneel</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Type fiets</label>
+        <select id="fiets_type">
+          <option value="">Selecteer...</option>
+          <option value="race">Racefiets</option>
+          <option value="gravel">Gravel</option>
+          <option value="mtb">MTB</option>
+          <option value="ebike">E-bike</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Frequentie</label>
+        <select id="frequentie">
+          <option value="">Selecteer...</option>
+          <option value="1x">1x per week</option>
+          <option value="2-3x">2-3x per week</option>
+          <option value="4-5x">4-5x per week</option>
+          <option value="dagelijks">Bijna dagelijks</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Omstandigheden</label>
+        <select id="omstandigheden">
+          <option value="">Selecteer...</option>
+          <option value="droog">Voornamelijk droog</option>
+          <option value="wisselend">Wisselend weer</option>
+          <option value="nat_modder">Veel regen / modder</option>
+          <option value="indoor">Voornamelijk indoor</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Ervaring met onderhoud</label>
+        <select id="ervaring">
+          <option value="">Selecteer...</option>
+          <option value="beginner">Beginner — nooit zelf gedaan</option>
+          <option value="wat">Een beetje ervaring</option>
+          <option value="gevorderd">Gevorderd</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Budget voor starter kit</label>
+        <select id="budget">
+          <option value="">Selecteer...</option>
+          <option value="laag">Instap — tot €25</option>
+          <option value="middel">Gemiddeld — €25-50</option>
+          <option value="hoog">Hoog — €50-100</option>
+          <option value="premium">Premium — €100+</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Onderhoudstempo</label>
+        <select id="tempo">
+          <option value="">Selecteer...</option>
+          <option value="minimaal">Zo min mogelijk gedoe</option>
+          <option value="gemiddeld">Een paar keer per maand</option>
+          <option value="gedegen">Elke rit goed verzorgen</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Waar staat de fiets?</label>
+        <select id="opslag">
+          <option value="">Selecteer...</option>
+          <option value="binnen">Binnen (gang/woonkamer)</option>
+          <option value="schuur">Schuur of garage</option>
+          <option value="buiten">Buiten / overdekt</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="generateStarterKit()">Stel mijn startpakket samen →</button>
+    <div class="loader" id="loader">Startpakket wordt samengesteld</div>
+    <p class="privacy-note">🔒 Je gegevens worden anoniem opgeslagen. Later ontvang je persoonlijke updates als je dat wilt.</p>
+  </div>
+</div>
+
+<!-- RESULT SECTION -->
+<section id="result-section">
+  <button class="back-btn" onclick="goBack()">← Nieuwe intake</button>
+  <div class="result-header">
+    <div class="result-eyebrow">Jouw persoonlijk startpakket</div>
+    <h2 id="result-title">KLAAR, <em>RENNER</em></h2>
+    <p class="result-intro" id="result-intro"></p>
+  </div>
+
+  <div id="rec-cards"></div>
+
+  <div class="budget-summary">
+    <div class="budget-summary-label">Geschat totaalbudget</div>
+    <div class="budget-summary-value" id="budget-total">— <em>—</em></div>
+    <p id="budget-note"></p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">ChainGuide</div>
+      <div class="footer-tagline">Drivetrain care for serious cyclists</div>
+    </div>
+    <div class="footer-links">
+      <a href="/" class="footer-link">Home</a>
+      <a href="/starter.html" class="footer-link">Starter kit</a>
+      <a href="/kennisbank.html" class="footer-link">Journal</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 ChainGuide</span>
+    <span class="footer-copy">chainguide.nl</span>
+  </div>
+</footer>
+
+<script>
+  // ---------- PROGRESS BAR ----------
+  const fieldIds = ['naam','email','rijder_type','fiets_type','frequentie','omstandigheden','ervaring','budget','tempo','opslag'];
+
+  function updateFormProgress() {
+    const filled = fieldIds.filter(id => {
+      const el = document.getElementById(id);
+      return el && el.value && el.value.trim() !== '';
+    }).length;
+    const pct = Math.round((filled / fieldIds.length) * 100);
+    const fill = document.getElementById('form-progress-fill');
+    const label = document.getElementById('form-progress-label');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.form-panel input, .form-panel select').forEach(el => {
+      el.addEventListener('input', updateFormProgress);
+      el.addEventListener('change', updateFormProgress);
+    });
+    updateFormProgress();
+  });
+
+  // ---------- RULE-BASED STARTER KIT (PLACEHOLDER) ----------
+  // Rule-based aanbevelingen. Later vervangen door AI/database call.
+  function recommendLube(inputs) {
+    const { omstandigheden, tempo, budget, rijder } = inputs;
+    if (omstandigheden === 'nat_modder') {
+      return budget === 'premium'
+        ? { brand: 'Silca', product: 'Synergetic Wet Lube', why: 'Bestand tegen regen en modder, hecht sterk. Voor wie veel in natte condities rijdt.', cost: 28 }
+        : { brand: 'Muc-Off', product: 'Wet Chain Lube', why: 'Betrouwbare wet lube die niet snel wegspoelt. Populair onder Nederlandse rijders.', cost: 14 };
+    }
+    if (omstandigheden === 'droog' && tempo === 'gedegen' && (budget === 'hoog' || budget === 'premium')) {
+      return { brand: 'Dynamic', product: 'Slick Wax (drip wax)', why: 'Drip wax — schone ketting, goede prestaties, weinig vuil. Aanrader voor droog weer en zorgvuldige rijders.', cost: 22 };
+    }
+    if (tempo === 'minimaal' || rijder === 'recreatief') {
+      return { brand: 'Dynamic', product: 'Bio All Round Lube', why: 'Allround lube die in vrijwel alle condities werkt. Weinig gedoe, lang mee.', cost: 12 };
+    }
+    if (omstandigheden === 'indoor') {
+      return { brand: 'Finish Line', product: 'Dry Teflon Lube', why: 'Op de trainer heb je geen water of vuil — dry lube blijft dan lang zitten en piept niet.', cost: 11 };
+    }
+    // Default: wisselend
+    return { brand: 'Muc-Off', product: 'All Weather Chain Lube', why: 'Werkt in wisselend Nederlands weer — droog, regen, een beetje modder. Veilige middenkeuze.', cost: 13 };
+  }
+
+  function recommendCleaner(inputs) {
+    const { omstandigheden, tempo, budget } = inputs;
+    if (budget === 'laag') return null; // skip, gebruik alleen een doek
+    if (omstandigheden === 'nat_modder' || tempo === 'gedegen') {
+      return { brand: 'Muc-Off', product: 'Bio Degreaser', why: 'Biologisch afbreekbaar, sterk genoeg voor modder en straatvuil.', cost: 11 };
+    }
+    return { brand: 'Dynamic', product: 'Drivetrain Detox', why: 'Standaard ontvetter — volstaat voor maandelijkse grondige reiniging.', cost: 10 };
+  }
+
+  function recommendTools(inputs) {
+    const { ervaring, budget, tempo } = inputs;
+    const tools = [];
+    tools.push('Schone pluisvrije doeken (microvezel)');
+    if (ervaring !== 'beginner' || budget !== 'laag') {
+      tools.push('Kettingborstel of oude tandenborstel');
+    }
+    if (tempo === 'gedegen' || budget === 'hoog' || budget === 'premium') {
+      tools.push('Kettingslijtagemeter (€5-15) — voorkomt dat je een cassette sloopt');
+    }
+    if (budget === 'premium') {
+      tools.push('Quick link tang — maakt schoonmaken veel makkelijker');
+    }
+    const costEstimate = budget === 'premium' ? 35 : (budget === 'hoog' ? 20 : 10);
+    return {
+      brand: 'ChainGuide essentials',
+      product: tools.join(' · '),
+      why: ervaring === 'beginner'
+        ? 'Basis gereedschap is goedkoop en maakt het verschil tussen "vies gedoe" en "tien minuten werk".'
+        : 'Dit tilt je onderhoud naar een volgend niveau zonder dat je een werkplaats hoeft in te richten.',
+      cost: costEstimate
+    };
+  }
+
+  function firstSteps(inputs) {
+    const { ervaring, opslag, fiets } = inputs;
+    const steps = [];
+    if (ervaring === 'beginner') {
+      steps.push('Begin met één doel: een schone, gesmeerde ketting — niks anders.');
+      steps.push('Leg een oude krant op de grond of werk buiten. Morsen hoort erbij de eerste keer.');
+    } else {
+      steps.push('Plan een vast moment — bijvoorbeeld zondagmiddag na je rit.');
+      steps.push('Reinig eerst, laat drogen, smeer pas daarna. Anders hecht niks.');
+    }
+    if (opslag === 'buiten') {
+      steps.push('Je fiets staat buiten — smeer vaker, vooral na regen. Overweeg een fietshoes.');
+    }
+    if (fiets === 'ebike') {
+      steps.push('E-bike kettingen staan onder hogere belasting. Smeer iets vaker dan je zou denken.');
+    }
+    steps.push('Lees de kennisbank — 10 minuten lezen bespaart je honderden euro\'s aan cassettes.');
+    return {
+      brand: 'Waar te beginnen',
+      product: 'Jouw eerste maand',
+      why: steps.join(' '),
+      cost: 0
+    };
+  }
+
+  function generateStarterKit() {
+    const naam = (document.getElementById('naam').value || 'renner').trim();
+    const email = document.getElementById('email').value.trim();
+    const rijder = document.getElementById('rijder_type').value;
+    const fiets = document.getElementById('fiets_type').value;
+    const frequentie = document.getElementById('frequentie').value;
+    const omstandigheden = document.getElementById('omstandigheden').value;
+    const ervaring = document.getElementById('ervaring').value;
+    const budget = document.getElementById('budget').value;
+    const tempo = document.getElementById('tempo').value;
+    const opslag = document.getElementById('opslag').value;
+
+    if (!rijder || !fiets || !omstandigheden || !ervaring || !budget) {
+      alert('Vul minimaal je rijdersprofiel, fiets, omstandigheden, ervaring en budget in.');
+      return;
+    }
+
+    const inputs = { rijder, fiets, frequentie, omstandigheden, ervaring, budget, tempo, opslag };
+
+    // Placeholder: save for later database wiring
+    const record = { naam, email, ...inputs, type: 'starter', timestamp: new Date().toISOString() };
+    try {
+      const existing = JSON.parse(localStorage.getItem('chainguide_starter') || '[]');
+      existing.push(record);
+      localStorage.setItem('chainguide_starter', JSON.stringify(existing));
+    } catch (e) { /* ignore */ }
+
+    document.getElementById('loader').classList.add('active');
+    document.querySelector('.submit-btn').disabled = true;
+
+    // Simulate async for nice UX — future: fetch to backend
+    setTimeout(() => {
+      const lube = recommendLube(inputs);
+      const cleaner = recommendCleaner(inputs);
+      const tools = recommendTools(inputs);
+      const first = firstSteps(inputs);
+
+      const items = [
+        { tag: 'Smeermiddel', card: lube },
+        cleaner ? { tag: 'Reiniger', card: cleaner } : null,
+        { tag: 'Gereedschap', card: tools },
+        { tag: 'Eerste stappen', card: first }
+      ].filter(Boolean);
+
+      document.getElementById('loader').classList.remove('active');
+      document.querySelector('.submit-btn').disabled = false;
+      document.getElementById('hero').style.display = 'none';
+
+      document.getElementById('result-title').innerHTML = `Klaar, <em>${naam.toUpperCase()}</em>`;
+
+      const intro = cleaner
+        ? `Op basis van jouw profiel stellen we dit startpakket samen. Vier onderdelen — smeermiddel, reiniger, gereedschap en de eerste stappen. Begin hier, bouw vanaf dit punt verder.`
+        : `Voor nu houden we het simpel. Je hoeft niet meteen alles te kopen — begin met smeermiddel, een doek en de juiste aanpak.`;
+      document.getElementById('result-intro').textContent = intro;
+
+      const container = document.getElementById('rec-cards');
+      container.innerHTML = '';
+
+      items.forEach((item, i) => {
+        const card = document.createElement('div');
+        card.className = 'rec-card';
+        card.style.animationDelay = `${i * 0.12}s`;
+        const costText = item.card.cost > 0 ? `€${item.card.cost} indicatie` : 'Geen kosten';
+        card.innerHTML = `
+          <span class="rec-num">0${i+1}</span>
+          <div class="rec-tag">${item.tag}</div>
+          <h3>${item.card.product}</h3>
+          <div class="rec-brand">${item.card.brand} · ${costText}</div>
+          <p class="rec-why">${item.card.why}</p>
+        `;
+        container.appendChild(card);
+      });
+
+      // Budget summary
+      const total = items.reduce((sum, item) => sum + (item.card.cost || 0), 0);
+      document.getElementById('budget-total').innerHTML = `€${total} <em>indicatie</em>`;
+      const budgetMap = {
+        laag: 'Instap — je kunt prima beginnen met het minimum.',
+        middel: 'Gemiddeld — alles wat je nodig hebt zonder overbodigheden.',
+        hoog: 'Hoog — kwaliteit die meerdere seizoenen meegaat.',
+        premium: 'Premium — wat Team Jumbo-Visma en andere pro\'s gebruiken.'
+      };
+      document.getElementById('budget-note').textContent =
+        (budgetMap[budget] || '') + ' Prijzen zijn richtlijnen — winkels variëren.';
+
+      document.getElementById('result-section').classList.add('visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 650);
+  }
+
+  function goBack() {
+    document.getElementById('result-section').classList.remove('visible');
+    document.getElementById('hero').style.display = 'grid';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
