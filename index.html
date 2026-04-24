@@ -138,6 +138,34 @@
     animation: fadeUp 0.7s ease forwards 0.55s;
   }
 
+  .hero-alt-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 36px;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+    width: fit-content;
+    transition: color 0.3s ease, border-color 0.3s ease, gap 0.3s ease;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.7s;
+  }
+  .hero-alt-link em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--accent-dark);
+    margin: 0 4px;
+  }
+  .hero-alt-link:hover { color: var(--ink); border-color: var(--ink); gap: 14px; }
+
   .hero-stat-num {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
@@ -415,6 +443,73 @@
   }
   .back-btn:hover { color: var(--ink); border-color: var(--ink); }
 
+  /* PROCESS SECTION — how it works */
+  .process-section {
+    padding: 140px 6vw 120px;
+    background: var(--paper);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .process-header {
+    max-width: 680px;
+    margin-bottom: 80px;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    position: relative;
+  }
+
+  .process-step {
+    position: relative;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .process-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 2.2rem;
+    color: var(--accent-dark);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  .process-step .process-kicker {
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  .process-step h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 2.6vw, 40px);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+
+  .process-step p {
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 340px;
+  }
+
+  @media (max-width: 900px) {
+    .process-grid { grid-template-columns: 1fr; gap: 48px; }
+    .process-header { margin-bottom: 56px; }
+  }
+
   /* JOURNAL SECTION */
   .journal-section {
     padding: 140px 6vw 120px;
@@ -493,20 +588,44 @@
     justify-content: flex-end;
   }
 
-  .card-photo {
+  .featured-backdrop {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(200,169,110,0.08) 0%, transparent 55%),
+      linear-gradient(135deg, #0e0e0e 0%, #161616 100%);
   }
 
-  .card-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(20%) brightness(0.45);
+  .featured-backdrop-num {
+    position: absolute;
+    top: 24px;
+    right: 48px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: rgba(200,169,110,0.55);
   }
 
-  .journal-card.featured > *:not(.card-photo) { position: relative; z-index: 1; }
+  .featured-backdrop-word {
+    position: absolute;
+    bottom: -48px;
+    left: -12px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(180px, 22vw, 340px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgba(200,169,110,0.06);
+    white-space: nowrap;
+  }
+
+  .journal-card.featured > *:not(.featured-backdrop) { position: relative; z-index: 1; }
   .journal-card.featured:hover { background: #111; }
+  .journal-card.featured:hover .featured-backdrop-word { color: rgba(200,169,110,0.09); transition: color 0.6s ease; }
 
   .journal-card-tag {
     font-size: 0.6rem;
@@ -827,6 +946,7 @@
 <nav>
   <a href="/" class="nav-logo">ChainGuide</a>
   <div class="nav-links">
+    <a href="/starter.html" class="nav-link">Starter kit</a>
     <a href="/kennisbank.html" class="nav-link">Journal</a>
   </div>
 </nav>
@@ -853,6 +973,7 @@
         <div class="hero-stat-label">Brands</div>
       </div>
     </div>
+    <a href="/starter.html" class="hero-alt-link">No products yet? <em>Start from zero</em> →</a>
   </div>
 
   <!-- RIGHT: Form -->
@@ -986,11 +1107,40 @@
   <div id="advice-cards"></div>
 </section>
 
+<!-- HOW IT WORKS -->
+<section class="process-section">
+  <div class="process-header">
+    <div class="section-num">— 01</div>
+    <div class="section-eyebrow">How it works</div>
+    <h2 class="section-title">Three steps,<br><em>no guesswork.</em></h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="process-num">01</div>
+      <div class="process-kicker">Intake</div>
+      <h3>Vertel wat je hebt.</h3>
+      <p>Jouw fiets, je smeermiddel, je rijstijl. Geen producten? Dan starten we bij nul met onze Starter kit.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">02</div>
+      <div class="process-kicker">Plan</div>
+      <h3>Krijg je route.</h3>
+      <p>Een stap-voor-stap onderhoudsplan, specifiek voor jouw merk, ritme en omstandigheden. In minder dan een minuut.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">03</div>
+      <div class="process-kicker">Ride</div>
+      <h3>Rij met vertrouwen.</h3>
+      <p>Schone aandrijflijn, minder slijtage, meer watts. Je ketting gaat twee tot drie keer langer mee.</p>
+    </div>
+  </div>
+</section>
+
 <!-- JOURNAL SECTION -->
 <section class="journal-section">
   <div class="section-header">
     <div>
-      <div class="section-num">— 01</div>
+      <div class="section-num">— 02</div>
       <div class="section-eyebrow">From the journal</div>
       <h2 class="section-title">Drivetrain<br><em>knowledge.</em></h2>
     </div>
@@ -999,8 +1149,9 @@
 
   <div class="journal-grid">
     <a class="journal-card featured" href="/kennisbank.html">
-      <div class="card-photo">
-        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80&fit=crop" alt="Cycling" loading="lazy">
+      <div class="featured-backdrop" aria-hidden="true">
+        <span class="featured-backdrop-num">01</span>
+        <span class="featured-backdrop-word">Chain</span>
       </div>
       <span class="journal-card-tag">Essential reading</span>
       <h3>How to lube your chain <em>correctly</em> — and why most riders get it wrong</h3>
