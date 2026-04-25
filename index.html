@@ -183,6 +183,7 @@
 
   /* FORM PANEL — right side */
   .form-panel {
+    position: relative;
     background: var(--ink);
     padding: 80px 60px;
     display: flex;
@@ -1356,12 +1357,33 @@
     }, 30);
   }
 
-  // Simulate existing data (will be real once database is connected)
-  setTimeout(() => {
-    animateCounter('counter-users', 247);
-    animateCounter('counter-products', 1043);
-    animateCounter('counter-brands', 14);
-  }, 800);
+  // Animate stats only when they enter the viewport — once
+  (function initCounterObserver() {
+    const statsEl = document.querySelector('.hero-stats');
+    if (!statsEl) return;
+    let fired = false;
+    const trigger = () => {
+      if (fired) return;
+      fired = true;
+      animateCounter('counter-users', 247);
+      animateCounter('counter-products', 1043);
+      animateCounter('counter-brands', 14);
+    };
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            trigger();
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.35 });
+      observer.observe(statsEl);
+    } else {
+      // Fallback: animate after a short delay on browsers without IntersectionObserver
+      setTimeout(trigger, 800);
+    }
+  })();
 
   function showForm() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
