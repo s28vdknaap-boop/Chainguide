@@ -565,6 +565,61 @@
     margin-bottom: 4px;
   }
 
+  /* AFFILIATE PRODUCT CHIPS */
+  .product-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 24px 0;
+  }
+
+  .product-link-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    background: var(--grey-light);
+    color: var(--ink);
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .product-link-chip:hover {
+    border-color: var(--accent);
+    background: var(--warm);
+  }
+
+  .product-link-chip .chip-name {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+
+  .product-link-chip .chip-brand {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  .product-link-chip .chip-shop {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    border-left: 1px solid var(--border);
+    padding-left: 10px;
+  }
+
+  .affiliate-disclaimer {
+    font-size: 0.75rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    margin-top: 40px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
 </style>
 </head>
 <body>
@@ -708,6 +763,21 @@
   <p>Drip wax — zoals Dynamic Slick Wax, Squirt of Silca Super Secret — combineert het gemak van gewone olie met de voordelen van wax. Je brengt het aan zoals normale olie, maar het droogt op tot een waxlaag die weinig vuil aantrekt.</p>
   <p>Het nadeel: je ketting moet echt schoon zijn voordat je het aanbrengt. Op een vuile ketting hecht wax slecht. Maar als je die stap niet overslaat, is het resultaat indrukwekkend: een schone, stille en efficiënte aandrijflijn.</p>
 
+  <div class="product-links">
+    <a href="https://www.bol.com/nl/s/?searchtext=dynamic+slick+wax" class="product-link-chip" target="_blank" rel="noopener sponsored">
+      <span><span class="chip-brand">Dynamic</span><br><span class="chip-name">Slick Wax</span></span>
+      <span class="chip-shop">bol.com →</span>
+    </a>
+    <a href="https://www.bol.com/nl/s/?searchtext=squirt+chain+lube" class="product-link-chip" target="_blank" rel="noopener sponsored">
+      <span><span class="chip-brand">Squirt</span><br><span class="chip-name">Chain Lube</span></span>
+      <span class="chip-shop">bol.com →</span>
+    </a>
+    <a href="https://www.bol.com/nl/s/?searchtext=silca+super+secret+chain+lube" class="product-link-chip" target="_blank" rel="noopener sponsored">
+      <span><span class="chip-brand">Silca</span><br><span class="chip-name">Super Secret</span></span>
+      <span class="chip-shop">bol.com →</span>
+    </a>
+  </div>
+
   <div class="cta-block">
     <h3>WELK SMEERMIDDEL PAST BIJ JOUW FIETS?</h3>
     <p>Vul je producten in en krijg direct een persoonlijk advies.</p>
@@ -771,6 +841,17 @@
     <li>Schone, pluisvrije doeken</li>
     <li>Optioneel: kettingreinigingsapparaat</li>
   </ul>
+
+  <div class="product-links">
+    <a href="https://www.bol.com/nl/s/?searchtext=dynamic+drivetrain+detox" class="product-link-chip" target="_blank" rel="noopener sponsored">
+      <span><span class="chip-brand">Dynamic</span><br><span class="chip-name">Drivetrain Detox</span></span>
+      <span class="chip-shop">bol.com →</span>
+    </a>
+    <a href="https://www.bol.com/nl/s/?searchtext=muc-off+bio+degreaser" class="product-link-chip" target="_blank" rel="noopener sponsored">
+      <span><span class="chip-brand">Muc-Off</span><br><span class="chip-name">Bio Degreaser</span></span>
+      <span class="chip-shop">bol.com →</span>
+    </a>
+  </div>
 
   <h2>De snelle methode (elke rit)</h2>
   <p>Na elke rit hoef je niet diep te reinigen. Trek een schone doek om de ketting terwijl je de pedalen achteruit draait. Zo verwijder je het grove vuil van de buitenkant. Dit kost 30 seconden en houdt je ketting veel langer schoon.</p>
