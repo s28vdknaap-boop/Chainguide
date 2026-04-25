@@ -63,7 +63,7 @@ exports.handler = async function(event) {
 - Rijdersprofiel: ${rijder}
 - Fietstype: ${fiets}
 - Smeermiddel: ${merkOlie} — product: ${typeOlie}
-- Reiniger: ${merkReiniger}
+- Reiniger: ${merkReiniger}${reinigersProduct ? ' — product: ' + reinigersProduct : ''}
 - Rijfrequentie: ${frequentie}
 - Rijomstandigheden: ${omstandigheden}
 
