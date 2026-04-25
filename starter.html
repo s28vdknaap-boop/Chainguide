@@ -641,6 +641,37 @@
   .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
   .footer-copy { font-size: 0.65rem; color: #444; letter-spacing: 0.06em; }
 
+  /* AFFILIATE LINKS */
+  .affiliate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 9px 18px;
+    border: 1px solid var(--accent);
+    color: var(--accent-dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.64rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .affiliate-btn:hover {
+    background: var(--accent);
+    color: var(--ink);
+  }
+
+  .affiliate-disclaimer {
+    font-size: 0.75rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    margin-top: 32px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: translateY(0); }
@@ -827,6 +858,10 @@
 
   <div id="rec-cards"></div>
 
+  <p class="affiliate-disclaimer" id="affiliate-disclaimer" style="display:none">
+    * Sommige links op deze pagina zijn affiliate links. Als je via zo'n link een product koopt, ontvangen wij een kleine commissie — zonder extra kosten voor jou. Dit heeft geen invloed op onze aanbevelingen.
+  </p>
+
   <div class="budget-summary">
     <div class="budget-summary-label">Geschat totaalbudget</div>
     <div class="budget-summary-value" id="budget-total">— <em>—</em></div>
@@ -853,6 +888,21 @@
 </footer>
 
 <script>
+  // ---------- AFFILIATE LINKS ----------
+  // Vervang de URLs hieronder met je echte affiliate links zodra je bent aangemeld bij bol.com Partner.
+  // Aanmelden: https://partner.bol.com
+  // Format: 'Merk|Product': 'jouw-affiliate-url'
+  const AFFILIATE_LINKS = {
+    'Silca|Synergetic Wet Lube':        'https://www.bol.com/nl/s/?searchtext=silca+synergetic+wet+lube',
+    'Muc-Off|Wet Chain Lube':           'https://www.bol.com/nl/s/?searchtext=muc-off+wet+chain+lube',
+    'Dynamic|Slick Wax (drip wax)':     'https://www.bol.com/nl/s/?searchtext=dynamic+slick+wax',
+    'Dynamic|Bio All Round Lube':        'https://www.bol.com/nl/s/?searchtext=dynamic+bio+all+round+lube',
+    'Finish Line|Dry Teflon Lube':       'https://www.bol.com/nl/s/?searchtext=finish+line+dry+teflon',
+    'Muc-Off|All Weather Chain Lube':   'https://www.bol.com/nl/s/?searchtext=muc-off+all+weather+chain+lube',
+    'Muc-Off|Bio Degreaser':            'https://www.bol.com/nl/s/?searchtext=muc-off+bio+degreaser',
+    'Dynamic|Drivetrain Detox':          'https://www.bol.com/nl/s/?searchtext=dynamic+drivetrain+detox',
+  };
+
   // ---------- PROGRESS BAR ----------
   const fieldIds = ['naam','email','rijder_type','fiets_type','frequentie','omstandigheden','ervaring','budget','tempo','opslag'];
 
@@ -1014,20 +1064,35 @@
       const container = document.getElementById('rec-cards');
       container.innerHTML = '';
 
+      let hasAffiliateLinks = false;
+
       items.forEach((item, i) => {
         const card = document.createElement('div');
         card.className = 'rec-card';
         card.style.animationDelay = `${i * 0.12}s`;
         const costText = item.card.cost > 0 ? `€${item.card.cost} indicatie` : 'Geen kosten';
+
+        const affiliateKey = `${item.card.brand}|${item.card.product}`;
+        const affiliateUrl = AFFILIATE_LINKS[affiliateKey];
+        const affiliateHtml = affiliateUrl
+          ? `<a href="${affiliateUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored">Bekijk bij bol.com →</a>`
+          : '';
+        if (affiliateUrl) hasAffiliateLinks = true;
+
         card.innerHTML = `
           <span class="rec-num">0${i+1}</span>
           <div class="rec-tag">${item.tag}</div>
           <h3>${item.card.product}</h3>
           <div class="rec-brand">${item.card.brand} · ${costText}</div>
           <p class="rec-why">${item.card.why}</p>
+          ${affiliateHtml}
         `;
         container.appendChild(card);
       });
+
+      if (hasAffiliateLinks) {
+        document.getElementById('affiliate-disclaimer').style.display = 'block';
+      }
 
       // Budget summary
       const total = items.reduce((sum, item) => sum + (item.card.cost || 0), 0);
